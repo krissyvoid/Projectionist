@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c2go2fnsh0yob"]
+
+[ext_resource type="Texture2D" uid="uid://inryq5bn646q" path="res://images/items/bip_soda.png" id="1_f7xl4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_23dvc"]
+size = Vector2(68, 96)
+
+[node name="BipSoda" type="Area2D" unique_id=956507557]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=536081756]
+position = Vector2(-12, 0)
+scale = Vector2(4, 4)
+texture = ExtResource("1_f7xl4")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1726210468]
+position = Vector2(34, 48)
+shape = SubResource("RectangleShape2D_23dvc")

@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3 uid="uid://culi1vj6wnl48"]
+
+[ext_resource type="StyleBox" uid="uid://b61w1k0ucss4" path="res://themes/new_style_box_flat.tres" id="1_4veml"]
+
+[resource]
+Panel/styles/panel = ExtResource("1_4veml")

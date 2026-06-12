@@ -1,0 +1,150 @@
+[gd_scene format=3 uid="uid://b65odtdljpk8d"]
+
+[ext_resource type="Texture2D" uid="uid://0oqhelbu5koy" path="res://images/background.png" id="1_80nbo"]
+[ext_resource type="Script" uid="uid://ywdi6d57qxju" path="res://game.gd" id="1_eow3j"]
+[ext_resource type="PackedScene" uid="uid://bm3m13e2ytnk8" path="res://world.tscn" id="2_e2o6t"]
+[ext_resource type="Theme" uid="uid://culi1vj6wnl48" path="res://theme_tray.tres" id="4_ryrav"]
+[ext_resource type="Texture2D" uid="uid://bqsida3w81it4" path="res://images/characters/spr_srench_glow_large.png" id="5_eow3j"]
+[ext_resource type="PackedScene" uid="uid://dccc5ld0nkd8w" path="res://player.tscn" id="5_iotsf"]
+[ext_resource type="Script" uid="uid://b4twi8lmd7w6m" path="res://inventory_grid.gd" id="5_vef74"]
+[ext_resource type="PackedScene" uid="uid://bhbiwo1m3uvqm" path="res://scenes/inv_items/inv_bip_soda.tscn" id="6_hve3p"]
+[ext_resource type="Script" uid="uid://cvsc5xbw6hyi0" path="res://inventory_test.gd" id="7_j5wjh"]
+[ext_resource type="PackedScene" uid="uid://ddww2xwi6ixc0" path="res://scenes/inv_items/inv_plopcorn.tscn" id="8_iotsf"]
+
+[sub_resource type="Theme" id="Theme_ryrav"]
+BoxContainer/constants/separation = 64
+
+[sub_resource type="Theme" id="Theme_eow3j"]
+
+[sub_resource type="Theme" id="Theme_vef74"]
+
+[node name="Game" type="Node2D" unique_id=350589745]
+script = ExtResource("1_eow3j")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=603163286]
+position = Vector2(0, -1)
+texture = ExtResource("1_80nbo")
+centered = false
+
+[node name="World" parent="." unique_id=2059734931 instance=ExtResource("2_e2o6t")]
+unique_name_in_owner = true
+position = Vector2(16, 15)
+
+[node name="Player" parent="World" unique_id=782183958 instance=ExtResource("5_iotsf")]
+position = Vector2(43.10013, 52.335873)
+scale = Vector2(0.25, 0.25)
+
+[node name="ScreenControl" type="Control" parent="." unique_id=258549957]
+layout_mode = 3
+anchors_preset = 0
+offset_top = -1.0
+offset_right = 1920.0
+offset_bottom = 1079.0
+mouse_filter = 1
+theme = SubResource("Theme_ryrav")
+metadata/_edit_use_anchors_ = true
+
+[node name="TrayBoxContainer" type="BoxContainer" parent="ScreenControl" unique_id=1662092548]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.014583333
+anchor_top = 0.7814815
+anchor_right = 0.98541665
+anchor_bottom = 0.9814815
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("4_ryrav")
+metadata/_edit_use_anchors_ = true
+
+[node name="TrayHBoxContainerL" type="HBoxContainer" parent="ScreenControl/TrayBoxContainer" unique_id=730578615]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScreenControl/TrayBoxContainer/TrayHBoxContainerL" unique_id=168112925]
+layout_mode = 2
+
+[node name="InventoryGrid" type="GridContainer" parent="ScreenControl/TrayBoxContainer/TrayHBoxContainerL/VBoxContainer" unique_id=1812787559]
+custom_minimum_size = Vector2(544, 208)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 112
+theme_override_constants/v_separation = 112
+columns = 5
+script = ExtResource("5_vef74")
+
+[node name="InvPlopcorn" parent="ScreenControl/TrayBoxContainer/TrayHBoxContainerL/VBoxContainer/InventoryGrid" unique_id=1359544981 instance=ExtResource("6_hve3p")]
+layout_mode = 2
+
+[node name="InvBipSoda" parent="ScreenControl/TrayBoxContainer/TrayHBoxContainerL/VBoxContainer/InventoryGrid" unique_id=968908897 instance=ExtResource("8_iotsf")]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScreenControl/TrayBoxContainer" unique_id=50176317]
+custom_minimum_size = Vector2(400, 208)
+layout_mode = 2
+
+[node name="InventoryTest" type="RichTextLabel" parent="ScreenControl/TrayBoxContainer/HBoxContainer" unique_id=1537189913]
+custom_minimum_size = Vector2(392, 200)
+layout_mode = 2
+theme = SubResource("Theme_eow3j")
+text = "INVENTORY TEST"
+script = ExtResource("7_j5wjh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScreenControl/TrayBoxContainer/HBoxContainer" unique_id=775334541]
+layout_mode = 2
+theme_override_constants/separation = 55
+
+[node name="ButtonRemovePlopcorn" type="Button" parent="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer" unique_id=791296729]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_vef74")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 18
+text = "Remove Plopcorn"
+
+[node name="ButtonRemoveBipSoda" type="Button" parent="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer" unique_id=905408525]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_vef74")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 18
+text = "Remove Bip Soda"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="ScreenControl/TrayBoxContainer/HBoxContainer" unique_id=466350095]
+layout_mode = 2
+theme_override_constants/separation = 55
+
+[node name="ButtonAddPlopcorn" type="Button" parent="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer2" unique_id=735044656]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_vef74")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 18
+text = "Add Plopcorn"
+
+[node name="ButtonAddBipSoda" type="Button" parent="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer2" unique_id=222196316]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_vef74")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 18
+text = "Add Bip Soda"
+
+[node name="TrayHBoxContainerR" type="HBoxContainer" parent="ScreenControl/TrayBoxContainer" unique_id=189670157]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="ScreenControl/TrayBoxContainer/TrayHBoxContainerR" unique_id=1119386015]
+position = Vector2(-154, -52)
+texture = ExtResource("5_eow3j")
+centered = false
+
+[node name="Button" type="Button" parent="ScreenControl/TrayBoxContainer/TrayHBoxContainerR" unique_id=511438271]
+layout_mode = 2
+text = "MENU"

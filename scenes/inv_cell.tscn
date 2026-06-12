@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://b7dlxtbiqrs60"]
+
+[node name="InvCell" type="Panel" unique_id=1551153614]
+size_flags_horizontal = 0
+size_flags_vertical = 0

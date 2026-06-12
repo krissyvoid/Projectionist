@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bhbiwo1m3uvqm"]
+
+[ext_resource type="StyleBox" uid="uid://b61w1k0ucss4" path="res://themes/new_style_box_flat.tres" id="1_dfxgg"]
+[ext_resource type="Texture2D" uid="uid://mo4m7psgb17o" path="res://images/items/plopcorn.png" id="2_dfxgg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pddtq"]
+size = Vector2(96, 96)
+
+[node name="InvPlopcorn" type="Panel" unique_id=1359544981]
+offset_right = 96.0
+offset_bottom = 96.0
+theme_override_styles/panel = ExtResource("1_dfxgg")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1650777489]
+scale = Vector2(4, 4)
+texture = ExtResource("2_dfxgg")
+centered = false
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1526198917]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=40859410]
+position = Vector2(48, 48)
+shape = SubResource("RectangleShape2D_pddtq")

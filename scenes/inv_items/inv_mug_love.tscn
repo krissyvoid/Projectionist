@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://crx68utfv612i"]
+
+[ext_resource type="StyleBox" uid="uid://b61w1k0ucss4" path="res://themes/new_style_box_flat.tres" id="1_nvb4v"]
+[ext_resource type="Texture2D" uid="uid://b1x7h2yjb6vn7" path="res://images/items/mugheart.png" id="2_nvb4v"]
+
+[sub_resource type="Theme" id="Theme_nvb4v"]
+Panel/styles/panel = ExtResource("1_nvb4v")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pddtq"]
+size = Vector2(96, 96)
+
+[node name="InvMugLove" type="Panel" unique_id=1359544981]
+offset_right = 96.0
+offset_bottom = 96.0
+theme = SubResource("Theme_nvb4v")
+theme_override_styles/panel = ExtResource("1_nvb4v")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1650777489]
+scale = Vector2(4, 4)
+texture = ExtResource("2_nvb4v")
+centered = false
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1526198917]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=40859410]
+position = Vector2(48, 48)
+shape = SubResource("RectangleShape2D_pddtq")
