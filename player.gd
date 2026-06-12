@@ -10,7 +10,7 @@ extends CharacterBody2D
 
 var go_to_pos: Vector2
 var mousemove: bool
-@export var mouseinworld: bool = true
+@export var mouseinworld: bool = false
 
 func _ready():
 	go_to_pos = self.position

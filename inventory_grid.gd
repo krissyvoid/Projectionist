@@ -26,7 +26,7 @@ func resetinventorygrid() -> void:
 		print("Adding ", key, " to inventory.")
 	## Add the contents of the inventory dictionary (in Game.gd) to InventoryGrid
 	for value in gamenode.inventory:
-		var ItemPath: String = gamenode.inventory[value]
+		var ItemPath: String = gamenode.inventory[value]["Scene"]
 		print("ItemPath is ", ItemPath)
 		var ItemScene = load(ItemPath)
 		var ItemInstance = ItemScene.instantiate()

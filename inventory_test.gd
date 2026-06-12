@@ -11,8 +11,12 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+
 func refreshinventorytest():
+	text = ""
 	text = "INVENTORY (testing only): "
 	for key in gamenode.inventory:
 		newline()
-		append_text(key)
+		append_text(gamenode.inventory[key]["Name"])
+		append_text(": ")
+		append_text(gamenode.inventory[key]["Description"])

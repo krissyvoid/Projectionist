@@ -80,6 +80,7 @@ custom_minimum_size = Vector2(400, 208)
 layout_mode = 2
 
 [node name="InventoryTest" type="RichTextLabel" parent="ScreenControl/TrayBoxContainer/HBoxContainer" unique_id=1537189913]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(392, 200)
 layout_mode = 2
 theme = SubResource("Theme_eow3j")
@@ -92,7 +93,6 @@ theme_override_constants/separation = 55
 
 [node name="ButtonRemovePlopcorn" type="Button" parent="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer" unique_id=791296729]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme = SubResource("Theme_vef74")
 theme_override_constants/outline_size = 0
@@ -115,7 +115,6 @@ theme_override_constants/separation = 55
 
 [node name="ButtonAddPlopcorn" type="Button" parent="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer2" unique_id=735044656]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme = SubResource("Theme_vef74")
 theme_override_constants/outline_size = 0
@@ -146,3 +145,8 @@ centered = false
 [node name="Button" type="Button" parent="ScreenControl/TrayBoxContainer/TrayHBoxContainerR" unique_id=511438271]
 layout_mode = 2
 text = "MENU"
+
+[connection signal="pressed" from="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer/ButtonRemovePlopcorn" to="." method="_on_button_remove_plopcorn_pressed"]
+[connection signal="pressed" from="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer/ButtonRemoveBipSoda" to="." method="_on_button_remove_bip_soda_pressed"]
+[connection signal="pressed" from="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer2/ButtonAddPlopcorn" to="." method="_on_button_add_plopcorn_pressed"]
+[connection signal="pressed" from="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer2/ButtonAddBipSoda" to="." method="_on_button_add_bip_soda_pressed"]

@@ -1,27 +1,53 @@
 extends Node2D
 
 @onready var inventorynode = get_node("/root/Game/ScreenControl/TrayBoxContainer/TrayHBoxContainerL/VBoxContainer/InventoryGrid")
+@onready var inventory_test: RichTextLabel = %InventoryTest
 
 @onready var button_remove_plopcorn: Button = %ButtonRemovePlopcorn
 @onready var button_remove_bip_soda: Button = %ButtonRemoveBipSoda
 @onready var button_add_plopcorn: Button = %ButtonAddPlopcorn
 @onready var button_add_bip_soda: Button = %ButtonAddBipSoda
 
-
+## ------------------------------------ ITEM AND INVENTORY DICTIONARIES ----------------------------
 static var inventory := {
-	
+	"Bip": {"Name": "Bip Soda",
+		"Scene": "res://scenes/inv_items/inv_bip_soda.tscn",
+		"Image": "res://images/items/bip_soda.png",
+		"Description": "32oz of delicious Bip! Mmmmm, rat blood flavour"
+		},
+	"Plopcorn": {"Name": "Tub of Plopcorn",
+		"Scene": "res://scenes/inv_items/inv_plopcorn.tscn",
+		"Image": "res://images/items/plopcorn.png",
+		"Description": "A big tub of fresh-ish plopcorn, govered in goop"
+		},
+	"Heart Mug": {"Name": "Heart Mug",
+		"Scene": "res://scenes/inv_items/inv_mug_love.tscn",
+		"Image": "res://images/items/mugheart.png",
+		"Description": "What's this doing here?"
+		},	
 }
 
 static var items_list := {
-	"Bip": "res://scenes/inv_items/inv_bip_soda.tscn",
-	"Plopcorn": "res://scenes/inv_items/inv_plopcorn.tscn",
-	"Heart Mug": "res://scenes/inv_items/inv_mug_love.tscn",	
+	"Bip": {"Name": "Bip Soda",
+		"Scene": "res://scenes/inv_items/inv_bip_soda.tscn",
+		"Image": "res://images/items/bip_soda.png",
+		"Description": "32oz of delicious Bip! Mmmmm, rat blood flavour"
+		},
+	"Plopcorn": {"Name": "Tub of Plopcorn",
+		"Scene": "res://scenes/inv_items/inv_plopcorn.tscn",
+		"Image": "res://images/items/plopcorn.png",
+		"Description": "A big tub of fresh-ish plopcorn, govered in goop"
+		},
+	"Heart Mug": {"Name": "Heart Mug",
+		"Scene": "res://scenes/inv_items/inv_mug_love.tscn",
+		"Image": "res://images/items/mugheart.png",
+		"Description": "What's this doing here?"
+		},	
 }
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	button_add_bip_soda.pressed.connect(add_bip_to_inventory)
-	button_remove_bip_soda.pressed.connect(remove_bip_from_inventory)
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -29,18 +55,27 @@ func _process(delta: float) -> void:
 	pass
 
 
-func add_bip_to_inventory():
-	var item_name = "Bip"
-	var item_path = "res://scenes/inv_items/inv_bip_soda.tscn"
-	inventory[item_name] = item_path
-	inventorynode.resetinventorygrid()
-
-func remove_bip_from_inventory():
-	inventory.erase("Bip")
-	inventorynode.resetinventorygrid()
-
+## --------------------------------- INVENTORY CONTROLS -------------------------------------
 func add_item_to_inv(item_name: String):
-	pass
+	inventory[item_name] = items_list[item_name]
+	inventory[item_name]["Name"] = items_list[item_name]["Name"]
+	inventory[item_name]["Scene"] = items_list[item_name]["Scene"]
+	inventory[item_name]["Image"] = items_list[item_name]["Image"]
+	inventory[item_name]["Description"] = items_list[item_name]["Description"]
+	inventorynode.resetinventorygrid()
+	inventory_test.refreshinventorytest()
 
 func remove_item_from_inv(item_name: String):
-	pass
+	inventory.erase(item_name)
+	inventorynode.resetinventorygrid()
+	inventory_test.refreshinventorytest()
+
+## Inventory adjustment test button controls
+func _on_button_remove_bip_soda_pressed() -> void:
+	remove_item_from_inv("Bip")
+func _on_button_add_plopcorn_pressed() -> void:
+	add_item_to_inv("Plopcorn")
+func _on_button_add_bip_soda_pressed() -> void:
+	add_item_to_inv("Bip")
+func _on_button_remove_plopcorn_pressed() -> void:
+	remove_item_from_inv("Plopcorn")
