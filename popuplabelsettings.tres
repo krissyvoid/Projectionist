@@ -1,0 +1,11 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://cywc1u6wca5i"]
+
+[ext_resource type="FontFile" uid="uid://t33rxqdn04gh" path="res://fonts/lucasarts-scumm-solid.otf" id="1_n5w3l"]
+
+[resource]
+line_spacing = 6.0
+font = ExtResource("1_n5w3l")
+font_size = 22
+font_color = Color(0, 0.9635121, 0.43081585, 1)
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)

@@ -3,24 +3,25 @@
 [ext_resource type="Texture2D" uid="uid://cxouk4lmw47pe" path="res://projectionbooth.png" id="1_f3sb7"]
 [ext_resource type="Script" uid="uid://chk4f21xw3r7c" path="res://world.gd" id="1_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://dccc5ld0nkd8w" path="res://player.tscn" id="2_fj7yv"]
+[ext_resource type="PackedScene" uid="uid://c2go2fnsh0yob" path="res://scenes/bip_soda.tscn" id="3_036b0"]
+[ext_resource type="PackedScene" uid="uid://r87afm8djphb" path="res://scenes/plopcorn.tscn" id="5_dwbse"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fj7yv"]
-size = Vector2(145.30902, 61.571617)
+size = Vector2(472, 200)
 
 [node name="World" type="Area2D" unique_id=586218641]
-scale = Vector2(12.993, 12.993)
 collision_layer = 128
 collision_mask = 128
 script = ExtResource("1_tlwt5")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=588686447]
-scale = Vector2(0.077, 0.077)
 texture = ExtResource("1_f3sb7")
 centered = false
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1944922519]
 unique_name_in_owner = true
 rotation = -3.1415925
+scale = Vector2(12.996, 12.996)
 
 [node name="floor_coll1" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=619826840]
 position = Vector2(-17.469637, -54.575237)
@@ -40,13 +41,20 @@ polygon = PackedVector2Array(-123.13877, -48.639816, -124.37016, -48.639816, -13
 
 [node name="World_Coll" type="CollisionShape2D" parent="." unique_id=18163166]
 unique_name_in_owner = true
-position = Vector2(72.65451, 30.785809)
+position = Vector2(944, 400)
+scale = Vector2(4, 4)
 shape = SubResource("RectangleShape2D_fj7yv")
 debug_color = Color(0.9490196, 0.19215687, 0.56078434, 0)
 
+[node name="BipSoda" parent="." unique_id=956507557 instance=ExtResource("3_036b0")]
+position = Vector2(505, 406)
+
 [node name="Player" parent="." unique_id=782183958 instance=ExtResource("2_fj7yv")]
-position = Vector2(43.100132, 52.335873)
-scale = Vector2(0.25, 0.25)
+position = Vector2(576, 706)
+scale = Vector2(4, 4)
+
+[node name="Plopcorn" parent="." unique_id=1886365014 instance=ExtResource("5_dwbse")]
+position = Vector2(617, 397)
 
 [connection signal="mouse_entered" from="." to="Player" method="_on_world_mouse_entered"]
 [connection signal="mouse_exited" from="." to="Player" method="_on_world_mouse_exited"]

@@ -33,7 +33,7 @@ func _physics_process(delta: float) -> void:
 	if mousemove == true:
 		var direction := global_position.direction_to(go_to_pos)
 		var distance := global_position.distance_to(go_to_pos)
-		var speed : float = max_speed if distance > 32 else max_speed * distance / 50
+		var speed : float = max_speed if distance > 32 else max_speed * distance / 5
 
 		var desired_velocity := direction * speed
 	
@@ -45,7 +45,7 @@ func _physics_process(delta: float) -> void:
 		direction.x = Input.get_axis("move_left","move_right")
 		direction.y = Input.get_axis("move_up","move_down")
 	
-		velocity = direction * max_speed / 15
+		velocity = direction * max_speed / 2
 		position += velocity * delta
 		move_and_slide()
 	

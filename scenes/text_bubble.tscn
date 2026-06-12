@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dyfxjn5ykc0oc"]
+
+[ext_resource type="Theme" uid="uid://cgv007wmsw2da" path="res://popuptheme.tres" id="1_6pgwx"]
+[ext_resource type="Script" uid="uid://xeiweadw1a7k" path="res://text_bubble.gd" id="1_nrpn5"]
+[ext_resource type="StyleBox" uid="uid://csnv5mcoar8e2" path="res://popupstyle.tres" id="2_lp4ak"]
+[ext_resource type="LabelSettings" uid="uid://cywc1u6wca5i" path="res://popuplabelsettings.tres" id="3_6hkqv"]
+
+[node name="TextBubble" type="Label" unique_id=230308650]
+anchors_preset = -1
+anchor_right = 0.047916666
+anchor_bottom = 0.024074074
+theme = ExtResource("1_6pgwx")
+theme_override_styles/normal = ExtResource("2_lp4ak")
+text = "Text Bubble"
+label_settings = ExtResource("3_6hkqv")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("1_nrpn5")
+metadata/_edit_use_anchors_ = true

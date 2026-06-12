@@ -25,6 +25,11 @@ window/size/mode=3
 window/size/initial_position_type=4
 window/stretch/mode="viewport"
 
+[global_group]
+
+collectables="Things the player can take"
+interactable="Things the player can interact with"
+
 [input]
 
 lmb={

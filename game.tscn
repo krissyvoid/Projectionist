@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bhbiwo1m3uvqm" path="res://scenes/inv_items/inv_bip_soda.tscn" id="6_hve3p"]
 [ext_resource type="Script" uid="uid://cvsc5xbw6hyi0" path="res://inventory_test.gd" id="7_j5wjh"]
 [ext_resource type="PackedScene" uid="uid://ddww2xwi6ixc0" path="res://scenes/inv_items/inv_plopcorn.tscn" id="8_iotsf"]
+[ext_resource type="PackedScene" uid="uid://dyfxjn5ykc0oc" path="res://scenes/text_bubble.tscn" id="10_hve3p"]
 
 [sub_resource type="Theme" id="Theme_ryrav"]
 BoxContainer/constants/separation = 64
@@ -145,6 +146,12 @@ centered = false
 [node name="Button" type="Button" parent="ScreenControl/TrayBoxContainer/TrayHBoxContainerR" unique_id=511438271]
 layout_mode = 2
 text = "MENU"
+
+[node name="TextBubble" parent="." unique_id=230308650 instance=ExtResource("10_hve3p")]
+offset_left = 31.0
+offset_top = 24.0
+offset_right = 253.0
+offset_bottom = 65.0
 
 [connection signal="pressed" from="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer/ButtonRemovePlopcorn" to="." method="_on_button_remove_plopcorn_pressed"]
 [connection signal="pressed" from="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer/ButtonRemoveBipSoda" to="." method="_on_button_remove_bip_soda_pressed"]
