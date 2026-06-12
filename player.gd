@@ -16,10 +16,11 @@ func _ready():
 	go_to_pos = self.position
 
 func _input(event):	
-	if mouseinworld == true:
-		if event.is_action_pressed("lmb"):
-			mousemove = true
-			go_to_pos = get_global_mouse_position()
+	if Input.get_axis("move_left", "move_right") != 0.0 or Input.get_axis("move_up", "move_down") != 0.0:
+		mousemove = false
+	elif mouseinworld and event.is_action_pressed("lmb"):
+		mousemove = true
+		go_to_pos = get_global_mouse_position()
 
 
 	if Input.get_axis("move_left", "move_right") != 0.0:
@@ -27,10 +28,9 @@ func _input(event):
 	if Input.get_axis("move_up", "move_down") != 0.0:
 		mousemove = false
 
-
 func _physics_process(delta: float) -> void:
 	# Mouse-controlled movement
-	if mousemove == true:
+	if mousemove:
 		var direction := global_position.direction_to(go_to_pos)
 		var distance := global_position.distance_to(go_to_pos)
 		var speed : float = max_speed if distance > 32 else max_speed * distance / 5
@@ -55,11 +55,9 @@ func _physics_process(delta: float) -> void:
 	if velocity.x < 0.0:
 		$Sprite2D.flip_h = true
 
-
 func _on_world_mouse_entered() -> void:
 	mouseinworld = true
 	#print("Mouse is in world")
-
 
 func _on_world_mouse_exited() -> void:
 	mouseinworld = false
