@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@onready var world: Area2D = %World
+@onready var world: Area2D = $".."
 @onready var sprite_2d: Sprite2D = %Sprite2D
 
 ## Player's maximum movement speed
@@ -10,14 +10,13 @@ extends CharacterBody2D
 
 var go_to_pos: Vector2
 var mousemove: bool
-
-var mouseinworld: bool = false
+@export var mouseinworld: bool = true
 
 func _ready():
 	go_to_pos = self.position
 
 func _input(event):	
-	if world.mouseinworld == true:
+	if mouseinworld == true:
 		if event.is_action_pressed("lmb"):
 			mousemove = true
 			go_to_pos = get_global_mouse_position()
@@ -57,12 +56,11 @@ func _physics_process(delta: float) -> void:
 		$Sprite2D.flip_h = true
 
 
-
 func _on_world_mouse_entered() -> void:
 	mouseinworld = true
-	print("Mouse is in world")
+	#print("Mouse is in world")
 
 
 func _on_world_mouse_exited() -> void:
 	mouseinworld = false
-	print("Mouse is out of world")
+	#print("Mouse is out of world")

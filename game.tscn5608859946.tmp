@@ -5,17 +5,14 @@
 [ext_resource type="PackedScene" uid="uid://bm3m13e2ytnk8" path="res://world.tscn" id="2_e2o6t"]
 [ext_resource type="Theme" uid="uid://culi1vj6wnl48" path="res://theme_tray.tres" id="4_ryrav"]
 [ext_resource type="Texture2D" uid="uid://bqsida3w81it4" path="res://images/characters/spr_srench_glow_large.png" id="5_eow3j"]
+[ext_resource type="Texture2D" uid="uid://mo4m7psgb17o" path="res://images/items/plopcorn.png" id="5_j5wjh"]
 [ext_resource type="Script" uid="uid://b4twi8lmd7w6m" path="res://inventory_grid.gd" id="5_vef74"]
-[ext_resource type="PackedScene" uid="uid://bhbiwo1m3uvqm" path="res://scenes/inv_items/inv_bip_soda.tscn" id="6_hve3p"]
 [ext_resource type="Script" uid="uid://cvsc5xbw6hyi0" path="res://inventory_test.gd" id="7_j5wjh"]
-[ext_resource type="PackedScene" uid="uid://ddww2xwi6ixc0" path="res://scenes/inv_items/inv_plopcorn.tscn" id="8_iotsf"]
 
 [sub_resource type="Theme" id="Theme_ryrav"]
 BoxContainer/constants/separation = 64
 
 [sub_resource type="Theme" id="Theme_eow3j"]
-
-[sub_resource type="Theme" id="Theme_vef74"]
 
 [node name="Game" type="Node2D" unique_id=350589745]
 script = ExtResource("1_eow3j")
@@ -69,11 +66,10 @@ theme_override_constants/v_separation = 112
 columns = 5
 script = ExtResource("5_vef74")
 
-[node name="InvPlopcorn" parent="ScreenControl/TrayBoxContainer/TrayHBoxContainerL/VBoxContainer/InventoryGrid" unique_id=1359544981 instance=ExtResource("6_hve3p")]
-layout_mode = 2
-
-[node name="InvBipSoda" parent="ScreenControl/TrayBoxContainer/TrayHBoxContainerL/VBoxContainer/InventoryGrid" unique_id=968908897 instance=ExtResource("8_iotsf")]
-layout_mode = 2
+[node name="Sprite2D" type="Sprite2D" parent="ScreenControl/TrayBoxContainer/TrayHBoxContainerL/VBoxContainer/InventoryGrid" unique_id=850255854]
+position = Vector2(78, 76)
+scale = Vector2(6, 6)
+texture = ExtResource("5_j5wjh")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScreenControl/TrayBoxContainer" unique_id=50176317]
 custom_minimum_size = Vector2(400, 208)
@@ -85,52 +81,6 @@ layout_mode = 2
 theme = SubResource("Theme_eow3j")
 text = "INVENTORY TEST"
 script = ExtResource("7_j5wjh")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ScreenControl/TrayBoxContainer/HBoxContainer" unique_id=775334541]
-layout_mode = 2
-theme_override_constants/separation = 55
-
-[node name="ButtonRemovePlopcorn" type="Button" parent="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer" unique_id=791296729]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-theme = SubResource("Theme_vef74")
-theme_override_constants/outline_size = 0
-theme_override_constants/h_separation = 0
-theme_override_font_sizes/font_size = 18
-text = "Remove Plopcorn"
-
-[node name="ButtonRemoveBipSoda" type="Button" parent="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer" unique_id=905408525]
-unique_name_in_owner = true
-layout_mode = 2
-theme = SubResource("Theme_vef74")
-theme_override_constants/outline_size = 0
-theme_override_constants/h_separation = 0
-theme_override_font_sizes/font_size = 18
-text = "Remove Bip Soda"
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="ScreenControl/TrayBoxContainer/HBoxContainer" unique_id=466350095]
-layout_mode = 2
-theme_override_constants/separation = 55
-
-[node name="ButtonAddPlopcorn" type="Button" parent="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer2" unique_id=735044656]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-theme = SubResource("Theme_vef74")
-theme_override_constants/outline_size = 0
-theme_override_constants/h_separation = 0
-theme_override_font_sizes/font_size = 18
-text = "Add Plopcorn"
-
-[node name="ButtonAddBipSoda" type="Button" parent="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer2" unique_id=222196316]
-unique_name_in_owner = true
-layout_mode = 2
-theme = SubResource("Theme_vef74")
-theme_override_constants/outline_size = 0
-theme_override_constants/h_separation = 0
-theme_override_font_sizes/font_size = 18
-text = "Add Bip Soda"
 
 [node name="TrayHBoxContainerR" type="HBoxContainer" parent="ScreenControl/TrayBoxContainer" unique_id=189670157]
 layout_mode = 2

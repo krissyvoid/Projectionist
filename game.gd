@@ -1,7 +1,6 @@
 extends Node2D
 
 @onready var inventorynode = get_node("/root/Game/ScreenControl/TrayBoxContainer/TrayHBoxContainerL/VBoxContainer/InventoryGrid")
-@onready var inventorytest = get_node("/root/Game/ScreenControl/TrayBoxContainer/HBoxContainer/InventoryTest")
 
 @onready var button_remove_plopcorn: Button = %ButtonRemovePlopcorn
 @onready var button_remove_bip_soda: Button = %ButtonRemoveBipSoda
@@ -10,8 +9,7 @@ extends Node2D
 
 
 static var inventory := {
-	"Bip": "res://scenes/inv_items/inv_bip_soda.tscn",
-	"Plopcorn": "res://scenes/inv_items/inv_plopcorn.tscn",
+	
 }
 
 static var items_list := {
@@ -22,28 +20,27 @@ static var items_list := {
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# Makes testing buttons activate the appropriate functions
-	button_add_bip_soda.pressed.connect(add_item_to_inv.bind("Bip"))
-	button_remove_bip_soda.pressed.connect(remove_item_from_inv.bind("Bip"))
-	button_add_plopcorn.pressed.connect(add_item_to_inv.bind("Plopcorn"))
-	button_remove_plopcorn.pressed.connect(remove_item_from_inv.bind("Plopcorn"))
+	button_add_bip_soda.pressed.connect(add_bip_to_inventory)
+	button_remove_bip_soda.pressed.connect(remove_bip_from_inventory)
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
 
-## Adds a specified item to the player inventory
-func add_item_to_inv(item_name: String):
-	if inventory.has(item_name) == false:
-		var item_path = items_list[item_name]
-		inventory[item_name] = item_path
-		inventorynode.resetinventorygrid()
-		inventorytest.refreshinventorytest()
+func add_bip_to_inventory():
+	var item_name = "Bip"
+	var item_path = "res://scenes/inv_items/inv_bip_soda.tscn"
+	inventory[item_name] = item_path
+	inventorynode.resetinventorygrid()
 
-## Removes a specified item to the player inventory
+func remove_bip_from_inventory():
+	inventory.erase("Bip")
+	inventorynode.resetinventorygrid()
+
+func add_item_to_inv(item_name: String):
+	pass
+
 func remove_item_from_inv(item_name: String):
-	if inventory.has(item_name):
-		inventory.erase(item_name)
-		inventorynode.resetinventorygrid()
-		inventorytest.refreshinventorytest()
+	pass

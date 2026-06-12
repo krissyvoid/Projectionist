@@ -12,7 +12,6 @@ func _process(delta: float) -> void:
 	pass
 
 func refreshinventorytest():
-	text = ""
 	text = "INVENTORY (testing only): "
 	for key in gamenode.inventory:
 		newline()
