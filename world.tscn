@@ -5,11 +5,15 @@
 [ext_resource type="PackedScene" uid="uid://dccc5ld0nkd8w" path="res://player.tscn" id="2_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://c2go2fnsh0yob" path="res://scenes/bip_soda.tscn" id="3_036b0"]
 [ext_resource type="PackedScene" uid="uid://r87afm8djphb" path="res://scenes/plopcorn.tscn" id="5_dwbse"]
+[ext_resource type="Texture2D" uid="uid://b1x7h2yjb6vn7" path="res://images/items/mugheart.png" id="6_dwbse"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fj7yv"]
 size = Vector2(472, 200)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pkg7o"]
+
 [node name="World" type="Area2D" unique_id=586218641]
+y_sort_enabled = true
 collision_layer = 128
 collision_mask = 128
 script = ExtResource("1_tlwt5")
@@ -49,12 +53,21 @@ debug_color = Color(0.9490196, 0.19215687, 0.56078434, 0)
 [node name="BipSoda" parent="." unique_id=956507557 instance=ExtResource("3_036b0")]
 position = Vector2(505, 406)
 
+[node name="Plopcorn" parent="." unique_id=1886365014 instance=ExtResource("5_dwbse")]
+position = Vector2(617, 397)
+
 [node name="Player" parent="." unique_id=782183958 instance=ExtResource("2_fj7yv")]
 position = Vector2(576, 706)
 scale = Vector2(4, 4)
 
-[node name="Plopcorn" parent="." unique_id=1886365014 instance=ExtResource("5_dwbse")]
-position = Vector2(617, 397)
+[node name="FOREGROUNDMUG" type="Sprite2D" parent="." unique_id=1999255585]
+visible = false
+modulate = Color(0.072057344, 0.072057344, 0.072057344, 1)
+material = SubResource("CanvasItemMaterial_pkg7o")
+position = Vector2(1472, 832.00006)
+scale = Vector2(24, 24)
+texture = ExtResource("6_dwbse")
+offset = Vector2(0, -6)
 
 [connection signal="mouse_entered" from="." to="Player" method="_on_world_mouse_entered"]
 [connection signal="mouse_exited" from="." to="Player" method="_on_world_mouse_exited"]

@@ -4,6 +4,7 @@ extends Node2D
 
 @onready var inventorynode = get_node("/root/Game/ScreenControl/TrayBoxContainer/TrayHBoxContainerL/VBoxContainer/InventoryGrid")
 @onready var inventory_test: RichTextLabel = %InventoryTest
+@onready var mouse_ray: RayCast2D = %MouseRay
 
 @onready var button_remove_plopcorn: Button = %ButtonRemovePlopcorn
 @onready var button_remove_bip_soda: Button = %ButtonRemoveBipSoda
@@ -54,7 +55,14 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	# Move MouseRay to mouse location
+	mouse_ray.position = get_global_mouse_position()
+	mouse_ray.target_position = Vector2(0.0,0.0)
+
+
+
+#func _input():
+	#pass
 
 
 ## --------------------------------- INVENTORY CONTROLS -------------------------------------

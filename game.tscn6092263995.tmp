@@ -14,7 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://dk18mydeib547" path="res://images/ui/Speaker_Icon.svg.png" id="10_iotsf"]
 [ext_resource type="AudioStream" uid="uid://bdh2sr2xo41cu" path="res://audio/bgm-theprojectionist.wav" id="13_lc2xo"]
 [ext_resource type="Script" uid="uid://ckk1dcm2jf8gv" path="res://bgm_player.gd" id="14_215e1"]
-[ext_resource type="Script" uid="uid://bokul30kno1gd" path="res://mouse_target_label.gd" id="15_7sc4i"]
 
 [sub_resource type="Theme" id="Theme_ryrav"]
 BoxContainer/constants/separation = 64
@@ -46,17 +45,6 @@ offset_right = 1920.0
 offset_bottom = 1079.0
 mouse_filter = 1
 theme = SubResource("Theme_ryrav")
-
-[node name="MouseTargetLabel" type="Label" parent="ScreenControl" unique_id=638007775]
-layout_mode = 0
-anchor_left = 0.015104166
-anchor_top = 0.0712963
-anchor_right = 0.23697917
-anchor_bottom = 0.13796297
-size_flags_horizontal = 4
-text = "[Mouse location]"
-script = ExtResource("15_7sc4i")
-metadata/_edit_use_anchors_ = true
 
 [node name="TrayBoxContainer" type="BoxContainer" parent="ScreenControl" unique_id=1662092548]
 layout_mode = 1
@@ -185,14 +173,6 @@ unique_name_in_owner = true
 stream = ExtResource("13_lc2xo")
 autoplay = true
 script = ExtResource("14_215e1")
-
-[node name="MouseRay" type="RayCast2D" parent="." unique_id=951988426]
-unique_name_in_owner = true
-target_position = Vector2(50, 50)
-collision_mask = 9
-hit_from_inside = true
-collide_with_areas = true
-collide_with_bodies = false
 
 [connection signal="pressed" from="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer/ButtonRemovePlopcorn" to="." method="_on_button_remove_plopcorn_pressed"]
 [connection signal="pressed" from="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer/ButtonRemoveBipSoda" to="." method="_on_button_remove_bip_soda_pressed"]

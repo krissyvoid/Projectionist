@@ -6,6 +6,7 @@
 size = Vector2(80, 96)
 
 [node name="BipSoda" type="Area2D" unique_id=956507557 groups=["collectables", "interactable"]]
+y_sort_enabled = true
 collision_layer = 8
 collision_mask = 0
 
