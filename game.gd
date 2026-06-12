@@ -1,5 +1,7 @@
 extends Node2D
 
+## Hello, Github, it's me
+
 @onready var inventorynode = get_node("/root/Game/ScreenControl/TrayBoxContainer/TrayHBoxContainerL/VBoxContainer/InventoryGrid")
 @onready var inventory_test: RichTextLabel = %InventoryTest
 
