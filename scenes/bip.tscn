@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://c2go2fnsh0yob"]
 
-[ext_resource type="Texture2D" uid="uid://inryq5bn646q" path="res://images/items/bip_soda.png" id="1_f7xl4"]
+[ext_resource type="Texture2D" uid="uid://inryq5bn646q" path="res://images/items/bip_soda.png" id="1_hhl7p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_23dvc"]
 size = Vector2(80, 96)
 
-[node name="BipSoda" type="Area2D" unique_id=956507557 groups=["collectables", "interactable"]]
+[node name="Bip" type="Area2D" unique_id=956507557 groups=["collectables", "interactables"]]
 y_sort_enabled = true
 collision_layer = 8
 collision_mask = 0
@@ -13,7 +13,7 @@ collision_mask = 0
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=536081756]
 position = Vector2(-8, 0)
 scale = Vector2(4, 4)
-texture = ExtResource("1_f7xl4")
+texture = ExtResource("1_hhl7p")
 centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1726210468]

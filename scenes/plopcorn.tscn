@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_23dvc"]
 size = Vector2(80, 96)
 
-[node name="Plopcorn" type="Area2D" unique_id=956507557]
+[node name="Plopcorn" type="Area2D" unique_id=956507557 groups=["collectables", "interactables"]]
 y_sort_enabled = true
 collision_layer = 8
 collision_mask = 0

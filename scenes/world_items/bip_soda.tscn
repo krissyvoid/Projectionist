@@ -5,7 +5,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_23dvc"]
 size = Vector2(68, 96)
 
-[node name="BipSoda" type="Area2D" unique_id=956507557]
+[node name="Bip" type="Area2D" unique_id=956507557]
+collision_layer = 9
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=536081756]
 position = Vector2(-12, 0)

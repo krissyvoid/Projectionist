@@ -4,13 +4,13 @@ extends CharacterBody2D
 @onready var sprite_2d: Sprite2D = %Sprite2D
 
 ## Player's maximum movement speed
-@export var max_speed = 300.0
+const max_speed = 300.0
 ## Player's movement acceleration
-@export var acceleration = 12000.0
+const acceleration = 12000.0
 
 var go_to_pos: Vector2
 var mousemove: bool
-@export var mouseinworld: bool = false
+static var mouseinworld: bool = false
 
 func _ready():
 	go_to_pos = self.position

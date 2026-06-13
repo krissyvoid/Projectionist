@@ -7,7 +7,10 @@
 radius = 2.7777762
 height = 22.22221
 
-[node name="Player" type="CharacterBody2D" unique_id=782183958]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
+size = Vector2(62, 61)
+
+[node name="Player" type="CharacterBody2D" unique_id=782183958 groups=["interactables"]]
 y_sort_enabled = true
 motion_mode = 1
 script = ExtResource("1_onrkg")
@@ -24,3 +27,11 @@ position = Vector2(-2.13162e-14, -0.9999995)
 rotation = 1.5707964
 scale = Vector2(2.5200016, 2.5200016)
 shape = SubResource("CapsuleShape2D_sh265")
+
+[node name="Srench" type="Area2D" parent="." unique_id=751177246]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Srench" unique_id=1795010632]
+position = Vector2(0, -24.5)
+shape = SubResource("RectangleShape2D_onrkg")

@@ -7,8 +7,10 @@
 
 [node name="TextBubble" type="Label" unique_id=230308650]
 anchors_preset = -1
-anchor_right = 0.047916666
-anchor_bottom = 0.024074074
+anchor_right = 0.115625
+anchor_bottom = 0.037962962
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("1_6pgwx")
 theme_override_styles/normal = ExtResource("2_lp4ak")
 text = "Text Bubble"

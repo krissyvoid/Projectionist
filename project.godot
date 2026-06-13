@@ -28,7 +28,7 @@ window/stretch/mode="viewport"
 [global_group]
 
 collectables="Things the player can take"
-interactable="Things the player can interact with"
+interactables="Things the player can interact with"
 
 [input]
 

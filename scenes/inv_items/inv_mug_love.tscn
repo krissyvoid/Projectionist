@@ -20,8 +20,9 @@ scale = Vector2(4, 4)
 texture = ExtResource("2_nvb4v")
 centered = false
 
-[node name="Area2D" type="Area2D" parent="." unique_id=1526198917]
+[node name="MugLove" type="Area2D" parent="." unique_id=1526198917]
+collision_layer = 9
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=40859410]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MugLove" unique_id=40859410]
 position = Vector2(48, 48)
 shape = SubResource("RectangleShape2D_pddtq")

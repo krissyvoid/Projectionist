@@ -16,6 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://bdh2sr2xo41cu" path="res://audio/bgm-theprojectionist.wav" id="13_lc2xo"]
 [ext_resource type="Script" uid="uid://ckk1dcm2jf8gv" path="res://bgm_player.gd" id="14_215e1"]
 [ext_resource type="Script" uid="uid://bokul30kno1gd" path="res://mouse_target_label.gd" id="15_7sc4i"]
+[ext_resource type="PackedScene" uid="uid://c2go2fnsh0yob" path="res://scenes/bip.tscn" id="16_80cx4"]
 
 [sub_resource type="Theme" id="Theme_ryrav"]
 BoxContainer/constants/separation = 64
@@ -40,7 +41,6 @@ texture = ExtResource("4_mfdv2")
 centered = false
 
 [node name="ScreenControl" type="Control" parent="." unique_id=258549957]
-unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
 offset_top = -1.0
@@ -48,16 +48,6 @@ offset_right = 1920.0
 offset_bottom = 1079.0
 mouse_filter = 1
 theme = SubResource("Theme_ryrav")
-
-[node name="TextBubble" parent="ScreenControl" unique_id=230308650 groups=["collectables", "interactables"] instance=ExtResource("10_hve3p")]
-visible = false
-layout_mode = 1
-anchor_left = 0.17291667
-anchor_top = 0.03425926
-anchor_right = 0.32708332
-anchor_bottom = 0.08611111
-grow_horizontal = 1
-grow_vertical = 1
 
 [node name="MouseTargetLabel" type="Label" parent="ScreenControl" unique_id=638007775]
 layout_mode = 0
@@ -195,6 +185,12 @@ centered = false
 layout_mode = 2
 text = "MENU"
 
+[node name="TextBubble" parent="." unique_id=230308650 groups=["collectables", "interactables"] instance=ExtResource("10_hve3p")]
+offset_left = 31.0
+offset_top = 24.0
+offset_right = 253.0
+offset_bottom = 65.0
+
 [node name="bgmPlayer" type="AudioStreamPlayer" parent="." unique_id=218129916]
 unique_name_in_owner = true
 stream = ExtResource("13_lc2xo")
@@ -208,6 +204,9 @@ collision_mask = 8
 hit_from_inside = true
 collide_with_areas = true
 collide_with_bodies = false
+
+[node name="Bip" parent="." unique_id=956507557 instance=ExtResource("16_80cx4")]
+position = Vector2(1813, 394)
 
 [connection signal="pressed" from="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer/ButtonRemovePlopcorn" to="." method="_on_button_remove_plopcorn_pressed"]
 [connection signal="pressed" from="ScreenControl/TrayBoxContainer/HBoxContainer/VBoxContainer/ButtonRemoveBipSoda" to="." method="_on_button_remove_bip_soda_pressed"]
