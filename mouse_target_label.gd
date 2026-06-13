@@ -13,12 +13,12 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	mouse_target = mouse_ray.get_collider()
 	if mouse_target != null:
-		var targetstr = str(mouse_target)
-		text = targetstr
-		var trimlength = targetstr.find(":")
+		var target_string = str(mouse_target)
+		text = target_string
+		var trim_length = target_string.find(":")
 		#print("Trim length: ", trimlength)
-		var targettrim = text.erase(trimlength, 99)
-		text = targettrim
+		var target_trim = text.erase(trim_length, 99)
+		text = target_trim
 	else:
 		text = "Nothing"
 	

@@ -1,12 +1,12 @@
 extends CharacterBody2D
 
-@onready var world: Area2D = $".."
-@onready var sprite_2d: Sprite2D = %Sprite2D
-
 ## Player's maximum movement speed
 const MAX_SPEED = 300.0
 ## Player's movement acceleration
 const ACCELERATION = 12000.0
+
+@onready var world: Area2D = $".."
+@onready var sprite_2d: Sprite2D = %Sprite2D
 
 var go_to_pos: Vector2
 var mousemove: bool

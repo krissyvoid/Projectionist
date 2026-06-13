@@ -1,0 +1,17 @@
+Style Guide
+
+Class names - LikeThis
+classes should be ordered thus
+
+constants - LIKE_THIS
+object reference variables - like_this
+public variables (can be accessed from any class) - like_this
+member variables (can be accessed from any functions of one class) - _like_this
+public functions (can be called from any class) - like_this
+public functions should have simple names like add or remove so when called from another class they look like this
+inventory_grid.add()
+the object reference variable describes what the function is acting on and the function describes what is being done
+local functions (only called from within class) - _like_this
+
+local members are defined within the functions that they are exclusive to - like_this
+these are not part of the broader class state and do not persist between function calls
