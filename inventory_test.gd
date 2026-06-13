@@ -15,8 +15,8 @@ func _process(delta: float) -> void:
 func refreshinventorytest():
 	text = ""
 	text = "INVENTORY (testing only): "
-	for key in gamenode.inventory:
+	for item in gamenode.inventory:
 		newline()
-		append_text(gamenode.inventory[key]["Name"])
+		append_text(gamenode.items_list[item]["Name"])
 		append_text(": ")
-		append_text(gamenode.inventory[key]["Description"])
+		append_text(gamenode.items_list[item]["Description"])

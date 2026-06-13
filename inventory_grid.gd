@@ -22,11 +22,11 @@ func resetinventorygrid() -> void:
 		inventorynode.remove_child(child)
 	
 	## Declare which items are being added
-	for key in gamenode.inventory:
-		print("Adding ", key, " to inventory.")
+	for item in gamenode.inventory:
+		print("Adding ", item, " to inventory.")
 	## Add the contents of the inventory dictionary (in Game.gd) to InventoryGrid
-	for value in gamenode.inventory:
-		var ItemPath: String = gamenode.inventory[value]["Scene"]
+	for item in gamenode.inventory:
+		var ItemPath: String = gamenode.items_list[item]["Scene"]
 		print("ItemPath is ", ItemPath)
 		var ItemScene = load(ItemPath)
 		var ItemInstance = ItemScene.instantiate()

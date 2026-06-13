@@ -22,19 +22,12 @@ func _input(event):
 		mousemove = true
 		go_to_pos = get_global_mouse_position()
 
-
-	if Input.get_axis("move_left", "move_right") != 0.0:
-		mousemove = false
-	if Input.get_axis("move_up", "move_down") != 0.0:
-		mousemove = false
-
 func _physics_process(delta: float) -> void:
 	# Mouse-controlled movement
 	if mousemove:
 		var direction := global_position.direction_to(go_to_pos)
 		var distance := global_position.distance_to(go_to_pos)
-		var speed : float = max_speed if distance > 32 else max_speed * distance / 5
-
+		var speed : float = max_speed if distance > 32 else max_speed * distance / 20
 		var desired_velocity := direction * speed
 	
 		velocity = velocity.move_toward(desired_velocity, acceleration * delta)
