@@ -72,7 +72,7 @@ func _examine(target):
 	add_child(instance)
 	var half_x = instance.size.x/2
 	var half_y = instance.size.y/2
-	instance.global_position = get_global_mouse_position() + Vector2 (half_x,-92)
+	instance.global_position = get_global_mouse_position() + Vector2 (-half_x,-92)
 		
 	# Keep popup within screen area
 	if instance.global_position.x - half_x < _border_x:
