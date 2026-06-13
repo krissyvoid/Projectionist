@@ -9,12 +9,12 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 
 
-func _on_bgm_button_toggled(toggled_on: bool) -> void:
+func _on_bgm_button_toggled(_toggled_on: bool) -> void:
 	set_stream_paused(!stream_paused)
 	if stream_paused:
 		bgm_button.icon = load("res://images/ui/Mute_Icon.svg.png")

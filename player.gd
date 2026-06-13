@@ -4,9 +4,9 @@ extends CharacterBody2D
 @onready var sprite_2d: Sprite2D = %Sprite2D
 
 ## Player's maximum movement speed
-const max_speed = 300.0
+const MAX_SPEED = 300.0
 ## Player's movement acceleration
-const acceleration = 12000.0
+const ACCELERATION = 12000.0
 
 var go_to_pos: Vector2
 var mousemove: bool
@@ -27,10 +27,10 @@ func _physics_process(delta: float) -> void:
 	if mousemove:
 		var direction := global_position.direction_to(go_to_pos)
 		var distance := global_position.distance_to(go_to_pos)
-		var speed : float = max_speed if distance > 32 else max_speed * distance / 20
+		var speed : float = MAX_SPEED if distance > 32 else MAX_SPEED * distance / 20
 		var desired_velocity := direction * speed
 	
-		velocity = velocity.move_toward(desired_velocity, acceleration * delta)
+		velocity = velocity.move_toward(desired_velocity, ACCELERATION * delta)
 		move_and_slide()
 		
 	else:
@@ -38,7 +38,7 @@ func _physics_process(delta: float) -> void:
 		direction.x = Input.get_axis("move_left","move_right")
 		direction.y = Input.get_axis("move_up","move_down")
 	
-		velocity = direction * max_speed / 2
+		velocity = direction * MAX_SPEED / 2
 		position += velocity * delta
 		move_and_slide()
 	

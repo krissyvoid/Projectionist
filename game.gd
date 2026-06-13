@@ -2,7 +2,7 @@ extends Node2D
 
 ## Hello, Github, it's me
 
-@onready var inventorynode = get_node("/root/Game/ScreenControl/TrayBoxContainer/TrayHBoxContainerL/VBoxContainer/InventoryGrid")
+@onready var inventory_grid = get_node("/root/Game/ScreenControl/TrayBoxContainer/TrayHBoxContainerL/VBoxContainer/InventoryGrid")
 @onready var inventory_test: RichTextLabel = %InventoryTest
 @onready var mouse_ray: RayCast2D = %MouseRay
 @onready var screen_control: Control = %ScreenControl
@@ -12,17 +12,17 @@ extends Node2D
 @onready var button_add_plopcorn: Button = %ButtonAddPlopcorn
 @onready var button_add_bip_soda: Button = %ButtonAddBipSoda
 
-static var mousetarget : Node # What node the mouse is currently over
-var targetstr : String # That node as a string
-var trimlength : int # The point in that string that begins the UID stuff
-var targettrim : String # The short, human-readable name of what the mouse is over. Should be the same as in items_list key
-var examinetarg : String # Examine variant of targettrim
+static var mouse_target : Node # What node the mouse is currently over
+var target_string : String # That node as a string
+var trim_length : int # The point in that string that begins the UID stuff
+var target_trim : String # The short, human-readable name of what the mouse is over. Should be the same as in items_list key
+var examine_target : String # Examine variant of targettrim
 
-const bordx : float = 64 # Popup borders on the left and right, px
-const bordy : float = 64 # Popup borders on the top and bottom, px
-var popuptime : float = 1.5 # How long a popup stays on screen for
-var popuptimeout : bool = 0 # Is the popup command on timeout, to prevent spamming
-var popuptimeoutlength : float = 0.5 # How long in seconds the timeout lasts
+const border_x : float = 64 # Popup borders on the left and right, px
+const border_y : float = 64 # Popup borders on the top and bottom, px
+var popup_time : float = 1.5 # How long a popup stays on screen for
+var popup_timeout : bool = 0 # Is the popup command on timeout, to prevent spamming
+var popup_timeout_length : float = 0.5 # How long in seconds the timeout lasts
 
 
 ## ------------------------------------ ITEM AND INVENTORY DICTIONARIES ----------------------------
@@ -50,6 +50,50 @@ static var items_list := {
 }
 static var inventory = ["MugLove"]
 
+## --------------------------------- INVENTORY CONTROLS -------------------------------------
+func _inventory_add_item(item_name: String):
+	if item_name not in inventory: 
+		inventory.append(item_name)
+		inventory_grid.add(item_name)
+		#inventory_test.inventory_refresh_test()
+
+func _inventory_remove_item(item_name: String):
+	if item_name in inventory: 
+		inventory.erase(item_name)
+		inventory_grid.remove(item_name)
+		#inventory_test.inventory_refresh_test()
+	
+
+## Get a popup with the target's description, if it is a valid target
+func _examine(target):
+	popup_timeout = true
+	get_tree().create_timer(popup_timeout_length).timeout.connect(func(): popup_timeout = false)
+	var popup = preload("res://scenes/text_bubble.tscn")
+	var instance = popup.instantiate()
+	instance.text = items_list[target]["Description"]
+	add_child(instance)
+	var half_x = instance.size.x/2
+	var half_y = instance.size.y/2
+	instance.global_position = get_global_mouse_position() + Vector2 (-half_x,-92)
+		
+	# Keep popup within screen area
+	if instance.global_position.x - half_x < border_x:
+		instance.global_position.x = border_x
+	elif instance.global_position.x + instance.size.x > (1920 - border_x):
+		instance.global_position.x = (1920 - border_x) - instance.size.x
+	if instance.global_position.y - instance.size.y < border_y:
+		instance.global_position.y = border_y/2 + instance.size.y
+	elif instance.global_position.y + half_y > 952.0:
+		instance.global_position.y = (1080 - border_y) - half_y
+		
+	# Reparents label to ScreenControl (breaks style and popup removal, don't use)
+	#var newparent = get_node("/root/Game/ScreenControl")
+	#instance.reparent(newparent)
+	
+	# Wait popuptime seconds then remove the popup
+	get_tree().create_timer(popup_time).timeout.connect(func (): remove_child(instance))
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
@@ -61,68 +105,28 @@ func _process(_delta: float) -> void:
 	mouse_ray.target_position = Vector2(0.0,0.0)
 	
 	# Get mouse target's name as a string, trimmed of its UID
-	mousetarget = mouse_ray.get_collider()
-	if mousetarget != null:
-		targetstr = str(mousetarget)
-		trimlength = targetstr.find(":")
-		targettrim = targetstr.erase(trimlength, 99)
+	mouse_target = mouse_ray.get_collider()
+	if mouse_target != null:
+		target_string = str(mouse_target)
+		trim_length = target_string.find(":")
+		target_trim = target_string.erase(trim_length, 99)
 	else:
-		targettrim = "Nothing"
+		target_trim = "Nothing"
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("rmb"):
-		if targettrim != "Nothing" and !popuptimeout:
-			examinetarg = targettrim
-			examine(examinetarg)
-
-## Get a popup with the target's description, if it is a valid target
-func examine(target):
-	popuptimeout = true
-	get_tree().create_timer(popuptimeoutlength).timeout.connect(func(): popuptimeout = false)
-	var popup = preload("res://scenes/text_bubble.tscn")
-	var instance = popup.instantiate()
-	instance.text = items_list[target]["Description"]
-	add_child(instance)
-	var halfx = instance.size.x/2
-	var halfy = instance.size.y/2
-	instance.global_position = get_global_mouse_position() + Vector2 (-halfx,-92)
-		
-	# Keep popup within screen area
-	if instance.global_position.x - halfx < bordx:
-		instance.global_position.x = bordx
-	elif instance.global_position.x + instance.size.x > (1920 - bordx):
-		instance.global_position.x = (1920 - bordx) - instance.size.x
-	if instance.global_position.y - instance.size.y < bordy:
-		instance.global_position.y = bordy/2 + instance.size.y
-	elif instance.global_position.y + halfy > 952.0:
-		instance.global_position.y = (1080 - bordy) - halfy
-		
-	# Reparents label to ScreenControl (breaks style and popup removal, don't use)
-	#var newparent = get_node("/root/Game/ScreenControl")
-	#instance.reparent(newparent)
-	
-	# Wait popuptime seconds then remove the popup
-	get_tree().create_timer(popuptime).timeout.connect(func (): remove_child(instance))
+		if target_trim != "Nothing" and !popup_timeout:
+			examine_target = target_trim
+			_examine(examine_target)
 
 
-
-## --------------------------------- INVENTORY CONTROLS -------------------------------------
-func add_item_to_inv(item_name: String):
-	inventory.append(item_name)
-	inventorynode.resetinventorygrid()
-	inventory_test.refreshinventorytest()
-
-func remove_item_from_inv(item_name: String):
-	inventory.erase(item_name)
-	inventorynode.resetinventorygrid()
-	inventory_test.refreshinventorytest()
 
 ## Inventory adjustment test button controls
 func _on_button_remove_bip_soda_pressed() -> void:
-	remove_item_from_inv("Bip")
+	_inventory_remove_item("Bip")
 func _on_button_add_plopcorn_pressed() -> void:
-	add_item_to_inv("Plopcorn")
+	_inventory_add_item("Plopcorn")
 func _on_button_add_bip_soda_pressed() -> void:
-	add_item_to_inv("Bip")
+	_inventory_add_item("Bip")
 func _on_button_remove_plopcorn_pressed() -> void:
-	remove_item_from_inv("Plopcorn")
+	_inventory_remove_item("Plopcorn")
