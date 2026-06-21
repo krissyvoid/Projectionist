@@ -41,6 +41,7 @@ texture = ExtResource("1_80nbo")
 centered = false
 
 [node name="World" parent="." unique_id=2059734931 instance=ExtResource("2_e2o6t")]
+unique_name_in_owner = true
 position = Vector2(16, 18)
 
 [node name="Frame" type="Sprite2D" parent="." unique_id=583393309]
@@ -158,7 +159,48 @@ metadata/_edit_use_anchors_ = true
 [node name="HBoxContainer" type="HBoxContainer" parent="ScreenControl/TrayBoxC-MID" unique_id=50176317]
 layout_mode = 2
 
+[node name="INVTEST" type="VBoxContainer" parent="ScreenControl/TrayBoxC-MID/HBoxContainer" unique_id=775334541]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="ButtonRemovePlopcorn" type="Button" parent="ScreenControl/TrayBoxC-MID/HBoxContainer/INVTEST" unique_id=791296729]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_vef74")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 18
+text = "Remove PCorn from Inv"
+
+[node name="ButtonRemoveBipSoda" type="Button" parent="ScreenControl/TrayBoxC-MID/HBoxContainer/INVTEST" unique_id=905408525]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_vef74")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 18
+text = "Remove Bip from Inv"
+
+[node name="ButtonAddPlopcorn" type="Button" parent="ScreenControl/TrayBoxC-MID/HBoxContainer/INVTEST" unique_id=735044656]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_vef74")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 18
+text = "Add Plopcorn to Inv"
+
+[node name="ButtonAddBipSoda" type="Button" parent="ScreenControl/TrayBoxC-MID/HBoxContainer/INVTEST" unique_id=222196316]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_vef74")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+theme_override_font_sizes/font_size = 18
+text = "Add Bip Soda to Inv"
+
 [node name="VerbGrid" type="GridContainer" parent="ScreenControl/TrayBoxC-MID/HBoxContainer" unique_id=704740325]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 16
 theme_override_constants/v_separation = 4
@@ -199,48 +241,6 @@ toggle_mode = true
 button_group = ExtResource("12_7sc4i")
 texture_normal = ExtResource("20_36jdj")
 texture_pressed = ExtResource("21_xfvwf")
-
-[node name="INVTEST" type="VBoxContainer" parent="ScreenControl/TrayBoxC-MID/HBoxContainer" unique_id=775334541]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="ButtonRemovePlopcorn" type="Button" parent="ScreenControl/TrayBoxC-MID/HBoxContainer/INVTEST" unique_id=791296729]
-unique_name_in_owner = true
-layout_mode = 2
-theme = SubResource("Theme_vef74")
-theme_override_constants/outline_size = 0
-theme_override_constants/h_separation = 0
-theme_override_font_sizes/font_size = 18
-text = "Remove Plopcorn"
-
-[node name="ButtonRemoveBipSoda" type="Button" parent="ScreenControl/TrayBoxC-MID/HBoxContainer/INVTEST" unique_id=905408525]
-unique_name_in_owner = true
-layout_mode = 2
-theme = SubResource("Theme_vef74")
-theme_override_constants/outline_size = 0
-theme_override_constants/h_separation = 0
-theme_override_font_sizes/font_size = 18
-text = "Remove Bip Soda"
-
-[node name="ButtonAddPlopcorn" type="Button" parent="ScreenControl/TrayBoxC-MID/HBoxContainer/INVTEST" unique_id=735044656]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-theme = SubResource("Theme_vef74")
-theme_override_constants/outline_size = 0
-theme_override_constants/h_separation = 0
-theme_override_font_sizes/font_size = 18
-text = "Add Plopcorn"
-
-[node name="ButtonAddBipSoda" type="Button" parent="ScreenControl/TrayBoxC-MID/HBoxContainer/INVTEST" unique_id=222196316]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-theme = SubResource("Theme_vef74")
-theme_override_constants/outline_size = 0
-theme_override_constants/h_separation = 0
-theme_override_font_sizes/font_size = 18
-text = "Add Bip Soda"
 
 [node name="TrayBoxC-RIGHT" type="BoxContainer" parent="ScreenControl" unique_id=824443972]
 layout_mode = 1
@@ -288,12 +288,12 @@ hit_from_inside = true
 collide_with_areas = true
 collide_with_bodies = false
 
-[connection signal="toggled" from="ScreenControl/TrayBoxC-MID/HBoxContainer/VerbGrid/ButtonLOOK" to="." method="_on_button_look_toggled"]
-[connection signal="toggled" from="ScreenControl/TrayBoxC-MID/HBoxContainer/VerbGrid/ButtonUSE" to="." method="_on_button_use_toggled"]
-[connection signal="toggled" from="ScreenControl/TrayBoxC-MID/HBoxContainer/VerbGrid/ButtonTAKE" to="." method="_on_button_take_toggled"]
-[connection signal="toggled" from="ScreenControl/TrayBoxC-MID/HBoxContainer/VerbGrid/ButtonTALK" to="." method="_on_button_talk_toggled"]
 [connection signal="pressed" from="ScreenControl/TrayBoxC-MID/HBoxContainer/INVTEST/ButtonRemovePlopcorn" to="." method="_on_button_remove_plopcorn_pressed"]
 [connection signal="pressed" from="ScreenControl/TrayBoxC-MID/HBoxContainer/INVTEST/ButtonRemoveBipSoda" to="." method="_on_button_remove_bip_soda_pressed"]
 [connection signal="pressed" from="ScreenControl/TrayBoxC-MID/HBoxContainer/INVTEST/ButtonAddPlopcorn" to="." method="_on_button_add_plopcorn_pressed"]
 [connection signal="pressed" from="ScreenControl/TrayBoxC-MID/HBoxContainer/INVTEST/ButtonAddBipSoda" to="." method="_on_button_add_bip_soda_pressed"]
+[connection signal="toggled" from="ScreenControl/TrayBoxC-MID/HBoxContainer/VerbGrid/ButtonLOOK" to="." method="_on_button_look_toggled"]
+[connection signal="toggled" from="ScreenControl/TrayBoxC-MID/HBoxContainer/VerbGrid/ButtonUSE" to="." method="_on_button_use_toggled"]
+[connection signal="toggled" from="ScreenControl/TrayBoxC-MID/HBoxContainer/VerbGrid/ButtonTAKE" to="." method="_on_button_take_toggled"]
+[connection signal="toggled" from="ScreenControl/TrayBoxC-MID/HBoxContainer/VerbGrid/ButtonTALK" to="." method="_on_button_talk_toggled"]
 [connection signal="pressed" from="ScreenControl/TrayBoxC-RIGHT/TrayHBoxContainerR/SoundContainer/bgmButton" to="bgmPlayer" method="_on_bgm_button_pressed"]

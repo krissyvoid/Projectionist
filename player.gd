@@ -7,6 +7,7 @@ const ACCELERATION = 12000.0
 
 @onready var world: Area2D = $".."
 @onready var sprite_2d: Sprite2D = %Sprite2D
+@onready var game: Node2D = $"../.."
 
 var go_to_pos: Vector2
 var mousemove: bool
@@ -18,13 +19,13 @@ func _ready():
 func _input(event):	
 	if Input.get_axis("move_left", "move_right") != 0.0 or Input.get_axis("move_up", "move_down") != 0.0:
 		mousemove = false
-	elif mouseinworld and event.is_action_pressed("lmb"):
+	elif mouseinworld and event.is_action_pressed("lmb") and game.active_verb < 1:
 		mousemove = true
 		go_to_pos = get_global_mouse_position()
 
 func _physics_process(delta: float) -> void:
 	# Mouse-controlled movement
-	if mousemove:
+	if mousemove and game.active_verb < 2:
 		var direction := global_position.direction_to(go_to_pos)
 		var distance := global_position.distance_to(go_to_pos)
 		var speed : float = MAX_SPEED if distance > 32 else MAX_SPEED * distance / 20

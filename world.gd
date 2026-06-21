@@ -1,5 +1,8 @@
 extends CollisionObject2D
 
+@onready var bip: Area2D = %Bip
+@onready var plopcorn: Area2D = %Plopcorn
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass

@@ -1,12 +1,14 @@
 extends Node2D
 
 ## Hello, Github, it's me
+@onready var world: Area2D = %World
 
 @onready var inventory_grid = get_node("/root/Game/ScreenControl/TrayBoxC-LEFT/TrayHBoxContainerL/InventoryGrid")
 @onready var inventory_test: RichTextLabel = %InventoryTest
 @onready var mouse_ray: RayCast2D = %MouseRay
 @onready var screen_control: Control = %ScreenControl
 
+@onready var _verb_grid: GridContainer = %VerbGrid
 @onready var button_look: TextureButton = %ButtonLOOK
 @onready var button_use: TextureButton = %ButtonUSE
 @onready var button_take: TextureButton = %ButtonTAKE
@@ -18,7 +20,7 @@ extends Node2D
 @onready var button_add_bip_soda: Button = %ButtonAddBipSoda
 
 static var active_verb : int = 0
-# 0 = LOOK AT, 1 = USE, 2 = TAKE, 3 = TALK TO
+# 0 = Default, 1 = LOOK AT, 2 = USE, 3 = TAKE, 4 = TALK TO
 
 static var mouse_target : Node # What node the mouse is currently over
 static var items_list := {
@@ -86,21 +88,30 @@ func _inventory_remove_item(item_name: String):
 ## --------------------------------- INTERACTION SYSTEMS -------------------------------------
 ## Verb Button inputs
 func _on_button_look_toggled(toggled_on: bool) -> void:
-	active_verb = 0
+	if active_verb != 1:
+		active_verb = 1
+	else: active_verb = 0
 func _on_button_use_toggled(toggled_on: bool) -> void:
-	active_verb = 1
+	if active_verb != 2:
+		active_verb = 2
+	else: active_verb = 0
 func _on_button_take_toggled(toggled_on: bool) -> void:
-	active_verb = 2
+	if active_verb != 3:
+		active_verb = 3
+	else: active_verb = 0
 func _on_button_talk_toggled(toggled_on: bool) -> void:
-	active_verb = 3
+	if active_verb != 4:
+		active_verb = 4
+	else: active_verb = 0
+
 
 ## Get a popup with the target's description, if it is a valid target
-func _examine(target):
+func _popup(content):
 	_popup_timeout = true
 	get_tree().create_timer(_popup_timeout_length).timeout.connect(func(): _popup_timeout = false)
 	var popup = preload("res://scenes/text_bubble.tscn")
 	var instance = popup.instantiate()
-	instance.text = items_list[target]["Description"]
+	instance.text = content
 	add_child(instance)
 	var half_x = instance.size.x/2
 	var half_y = instance.size.y/2
@@ -115,10 +126,6 @@ func _examine(target):
 		instance.global_position.y = _border_y/2 + instance.size.y
 	elif instance.global_position.y + half_y > 952.0:
 		instance.global_position.y = (1080 - _border_y) - half_y
-		
-	# Reparents label to ScreenControl (breaks style and popup removal, don't use)
-	#var newparent = get_node("/root/Game/ScreenControl")
-	#instance.reparent(newparent)
 	
 	# Wait popuptime seconds then remove the popup
 	get_tree().create_timer(_popup_time).timeout.connect(func (): remove_child(instance))
@@ -143,42 +150,60 @@ func _process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	# LOOK AT
 	if event.is_action_pressed("rmb"):
+		# Clears current verb (defaulting to moving and looking)
 		active_verb = 0
+		var _verbbuttons := _verb_grid.get_children()
+		for x in _verbbuttons:
+			x.set_pressed_no_signal(false)
 		if _target_trim != "Nothing" and !_popup_timeout:
+			# Posts an items description if valid
 			_examine_target = _target_trim
-			_examine(_examine_target)
+			var desctext : String = items_list[_examine_target]["Description"]
+			_popup(desctext)
 	
-	if event.is_action_pressed("lmb") and active_verb == 0: 
+	if event.is_action_pressed("lmb") and active_verb == 1: 
 		if _target_trim != "Nothing" and !_popup_timeout:
 			_examine_target = _target_trim
-			_examine(_examine_target)
+			var desctext : String = items_list[_examine_target]["Description"]
+			_popup(desctext)
 	
 	
 	# USE
-	if event.is_action_pressed("lmb") and active_verb == 1: 
+	if event.is_action_pressed("lmb") and active_verb == 2: 
 		pass
 	
 	# TAKE
-	if event.is_action_pressed("lmb") and active_verb == 2:
-		if _target_trim != "Nothing" and items_list[_target_trim]["Take-able"] == true:
-			pass # Take it and say the taking-it line
+	if event.is_action_pressed("lmb") and active_verb == 3:
+		if _target_trim != "Nothing" and items_list[_target_trim]["Take-able"] == true and inventory.has(_target_trim) == false:
+			# Take it and say the taking-it line
+			_inventory_add_item(_target_trim)
+			mouse_target.visible = false
+			print("Taking the ", _target_trim)
+			var taketext : String = items_list[_target_trim]["Take Line"]
+			_popup(taketext)
+			# pass 
 		elif _target_trim != "Nothing" and items_list[_target_trim]["Take-able"] == false:
 			pass # Say the taking-it line
 		elif _target_trim == "Nothing":
 			pass # Ignore input
 	
 	# TALK TO
-	if event.is_action_pressed("lmb") and active_verb == 3:
+	if event.is_action_pressed("lmb") and active_verb == 4:
 		pass
 
 
 ## --------------------------------- TESTING SYSTEMS -------------------------------------
+
 ## Inventory adjustment test button controls
 func _on_button_remove_bip_soda_pressed() -> void:
 	_inventory_remove_item("Bip")
+	world.bip.visible = true
 func _on_button_add_plopcorn_pressed() -> void:
 	_inventory_add_item("Plopcorn")
+	world.plopcorn.visible = false
 func _on_button_add_bip_soda_pressed() -> void:
 	_inventory_add_item("Bip")
+	world.bip.visible = false
 func _on_button_remove_plopcorn_pressed() -> void:
 	_inventory_remove_item("Plopcorn")
+	world.plopcorn.visible = true

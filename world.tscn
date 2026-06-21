@@ -64,9 +64,11 @@ texture = ExtResource("6_dwbse")
 offset = Vector2(0, -6)
 
 [node name="Bip" parent="." unique_id=956507557 instance=ExtResource("3_036b0")]
+unique_name_in_owner = true
 position = Vector2(490, 398)
 
 [node name="Plopcorn" parent="." unique_id=1933095797 instance=ExtResource("5_dwbse")]
+unique_name_in_owner = true
 position = Vector2(647, 394)
 
 [connection signal="mouse_entered" from="." to="Player" method="_on_world_mouse_entered"]
