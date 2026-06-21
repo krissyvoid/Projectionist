@@ -1,9 +1,7 @@
 extends GridContainer
 
 @onready var game_node = get_node("/root/Game")
-@onready var inventory_node = get_node("/root/Game/ScreenControl/TrayBoxContainer/TrayHBoxContainerL/VBoxContainer/InventoryGrid")
-#don't know what this is for
-#@onready var InvCell = load("res://scenes/inv_cell.tscn")
+@onready var inventory_node = get_node("/root/Game/ScreenControl/TrayBoxC-LEFT/TrayHBoxContainerL/InventoryGrid")
 var _inventory_dict := {}   # item_name → node instance
 
 func add (item: String) -> void:

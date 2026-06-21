@@ -1,7 +1,7 @@
 extends RichTextLabel
 
 @onready var game_node = get_node("/root/Game")
-@onready var inventory_node = get_node("/root/Game/ScreenControl/TrayBoxContainer/TrayHBoxContainerL/VBoxContainer/InventoryGrid")
+@onready var inventory_node = get_node("/root/Game/ScreenControl/TrayBoxC-LEFT/TrayHBoxContainerL/InventoryGrid")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

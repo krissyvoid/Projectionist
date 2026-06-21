@@ -2,37 +2,53 @@ extends Node2D
 
 ## Hello, Github, it's me
 
-@onready var inventory_grid = get_node("/root/Game/ScreenControl/TrayBoxContainer/TrayHBoxContainerL/VBoxContainer/InventoryGrid")
+@onready var inventory_grid = get_node("/root/Game/ScreenControl/TrayBoxC-LEFT/TrayHBoxContainerL/InventoryGrid")
 @onready var inventory_test: RichTextLabel = %InventoryTest
 @onready var mouse_ray: RayCast2D = %MouseRay
 @onready var screen_control: Control = %ScreenControl
+
+@onready var button_look: TextureButton = %ButtonLOOK
+@onready var button_use: TextureButton = %ButtonUSE
+@onready var button_take: TextureButton = %ButtonTAKE
+@onready var button_talk: TextureButton = %ButtonTALK
 
 @onready var button_remove_plopcorn: Button = %ButtonRemovePlopcorn
 @onready var button_remove_bip_soda: Button = %ButtonRemoveBipSoda
 @onready var button_add_plopcorn: Button = %ButtonAddPlopcorn
 @onready var button_add_bip_soda: Button = %ButtonAddBipSoda
 
+static var active_verb : int = 0
+# 0 = LOOK AT, 1 = USE, 2 = TAKE, 3 = TALK TO
+
 static var mouse_target : Node # What node the mouse is currently over
 static var items_list := {
 	"Bip": {"Name": "Bip Soda",
 		"Scene": "res://scenes/inv_items/inv_bip_soda.tscn",
 		"Image": "res://images/items/bip_soda.png",
-		"Description": "32oz of delicious Bip!\nMmmmm, rat blood flavour"
+		"Description": "32oz of delicious Bip!\nMmmmm, rat blood flavour",
+		"Take-able": true,
+		"Take Line": "Ooh, frosty! I'll just take this!"
 		},
 	"Plopcorn": {"Name": "Tub of Plopcorn",
 		"Scene": "res://scenes/inv_items/inv_plopcorn.tscn",
 		"Image": "res://images/items/plopcorn.png",
-		"Description": "A big tub of fresh-ish plopcorn,\ngovered in goop"
+		"Description": "A big tub of fresh-ish plopcorn,\ncovered in goop",
+		"Take-able": true,
+		"Take Line": "My favourite and I AM getting snacky."
 		},
 	"MugLove": {"Name": "Heart Mug",
 		"Scene": "res://scenes/inv_items/inv_mug_love.tscn",
 		"Image": "res://images/items/mugheart.png",
-		"Description": "What's this doing here?"
+		"Description": "What's this doing here?",
+		"Take-able": false,
+		"Take Line": "I don't want this."
 		},
 	"Srench": {"Name": "Srench",
 		"Scene": "res://player.tscn",
 		"Image": "res://images/characters/spr_srench_glow_large.png",
-		"Description": "Ahh! It's a srench!"
+		"Description": "It looks oily. And bitey!",
+		"Take-able": false,
+		"Take Line": "I don't think it wants to go with me!"
 		},
 }
 static var inventory = ["MugLove"]
@@ -48,6 +64,11 @@ var _popup_time : float = 1.5 # How long a popup stays on screen for
 var _popup_timeout : bool = 0 # Is the popup command on timeout, to prevent spamming
 var _popup_timeout_length : float = 0.5 # How long in seconds the timeout lasts
 
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass
+
+
 ## --------------------------------- INVENTORY CONTROLS -------------------------------------
 func _inventory_add_item(item_name: String):
 	if item_name not in inventory: 
@@ -60,7 +81,18 @@ func _inventory_remove_item(item_name: String):
 		inventory.erase(item_name)
 		inventory_grid.remove(item_name)
 		#inventory_test.inventory_refresh_test()
-	
+
+
+## --------------------------------- INTERACTION SYSTEMS -------------------------------------
+## Verb Button inputs
+func _on_button_look_toggled(toggled_on: bool) -> void:
+	active_verb = 0
+func _on_button_use_toggled(toggled_on: bool) -> void:
+	active_verb = 1
+func _on_button_take_toggled(toggled_on: bool) -> void:
+	active_verb = 2
+func _on_button_talk_toggled(toggled_on: bool) -> void:
+	active_verb = 3
 
 ## Get a popup with the target's description, if it is a valid target
 func _examine(target):
@@ -92,10 +124,6 @@ func _examine(target):
 	get_tree().create_timer(_popup_time).timeout.connect(func (): remove_child(instance))
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	# Move MouseRay to mouse location
@@ -111,14 +139,40 @@ func _process(_delta: float) -> void:
 	else:
 		_target_trim = "Nothing"
 
+
 func _input(event: InputEvent) -> void:
+	# LOOK AT
 	if event.is_action_pressed("rmb"):
+		active_verb = 0
 		if _target_trim != "Nothing" and !_popup_timeout:
 			_examine_target = _target_trim
 			_examine(_examine_target)
+	
+	if event.is_action_pressed("lmb") and active_verb == 0: 
+		if _target_trim != "Nothing" and !_popup_timeout:
+			_examine_target = _target_trim
+			_examine(_examine_target)
+	
+	
+	# USE
+	if event.is_action_pressed("lmb") and active_verb == 1: 
+		pass
+	
+	# TAKE
+	if event.is_action_pressed("lmb") and active_verb == 2:
+		if _target_trim != "Nothing" and items_list[_target_trim]["Take-able"] == true:
+			pass # Take it and say the taking-it line
+		elif _target_trim != "Nothing" and items_list[_target_trim]["Take-able"] == false:
+			pass # Say the taking-it line
+		elif _target_trim == "Nothing":
+			pass # Ignore input
+	
+	# TALK TO
+	if event.is_action_pressed("lmb") and active_verb == 3:
+		pass
 
 
-
+## --------------------------------- TESTING SYSTEMS -------------------------------------
 ## Inventory adjustment test button controls
 func _on_button_remove_bip_soda_pressed() -> void:
 	_inventory_remove_item("Bip")
