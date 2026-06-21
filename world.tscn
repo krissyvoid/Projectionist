@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c2go2fnsh0yob" path="res://scenes/bip.tscn" id="3_036b0"]
 [ext_resource type="PackedScene" uid="uid://r87afm8djphb" path="res://scenes/plopcorn.tscn" id="5_dwbse"]
 [ext_resource type="Texture2D" uid="uid://b1x7h2yjb6vn7" path="res://images/items/mugheart.png" id="6_dwbse"]
+[ext_resource type="PackedScene" uid="uid://b1jsq1ag7vb36" path="res://scenes/world_items/TrashCan.tscn" id="7_pkg7o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fj7yv"]
 size = Vector2(472, 200)
@@ -51,6 +52,7 @@ shape = SubResource("RectangleShape2D_fj7yv")
 debug_color = Color(0.9490196, 0.19215687, 0.56078434, 0)
 
 [node name="Player" parent="." unique_id=782183958 instance=ExtResource("2_fj7yv")]
+unique_name_in_owner = true
 position = Vector2(881, 717)
 scale = Vector2(4, 4)
 
@@ -65,11 +67,14 @@ offset = Vector2(0, -6)
 
 [node name="Bip" parent="." unique_id=956507557 instance=ExtResource("3_036b0")]
 unique_name_in_owner = true
-position = Vector2(490, 398)
+position = Vector2(503, 402)
 
 [node name="Plopcorn" parent="." unique_id=1933095797 instance=ExtResource("5_dwbse")]
 unique_name_in_owner = true
-position = Vector2(647, 394)
+position = Vector2(623, 399)
+
+[node name="TrashCan" parent="." unique_id=891730761 instance=ExtResource("7_pkg7o")]
+position = Vector2(1426, 448)
 
 [connection signal="mouse_entered" from="." to="Player" method="_on_world_mouse_entered"]
 [connection signal="mouse_exited" from="." to="Player" method="_on_world_mouse_exited"]

@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://vllxw471rv0x"]
+
+[ext_resource type="Theme" uid="uid://culi1vj6wnl48" path="res://theme_tray.tres" id="1_p2a8y"]
+[ext_resource type="Texture2D" uid="uid://cr7t7w643si4i" path="res://images/items/Trash.png" id="2_p2a8y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6kn3j"]
+size = Vector2(96, 96)
+
+[node name="InvTrash" type="Panel" unique_id=1359544981]
+offset_right = 96.0
+offset_bottom = 96.0
+theme = ExtResource("1_p2a8y")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=801060390]
+scale = Vector2(4, 4)
+texture = ExtResource("2_p2a8y")
+centered = false
+
+[node name="Trash" type="Area2D" parent="." unique_id=836303398]
+scale = Vector2(4, 4)
+collision_layer = 9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trash" unique_id=1614594169]
+position = Vector2(12, 12)
+scale = Vector2(0.25, 0.25)
+shape = SubResource("RectangleShape2D_6kn3j")

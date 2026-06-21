@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://b1jsq1ag7vb36"]
+
+[ext_resource type="Texture2D" uid="uid://dnw7ipka1x6ix" path="res://images/items/TrashCan.png" id="1_yahok"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_23dvc"]
+size = Vector2(160, 224)
+
+[node name="TrashCan" type="Area2D" unique_id=956507557]
+collision_layer = 9
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=536081756]
+position = Vector2(-20, -56)
+scale = Vector2(4, 4)
+texture = ExtResource("1_yahok")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1726210468]
+position = Vector2(80, 112)
+shape = SubResource("RectangleShape2D_23dvc")

@@ -15,7 +15,6 @@ theme = ExtResource("1_6pgwx")
 theme_override_styles/normal = ExtResource("2_lp4ak")
 text = "Text Bubble"
 label_settings = ExtResource("3_6hkqv")
-horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("1_nrpn5")
 metadata/_edit_use_anchors_ = true

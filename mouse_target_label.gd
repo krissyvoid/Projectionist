@@ -1,6 +1,7 @@
-extends Label
+extends RichTextLabel
 
 @onready var mouse_ray: RayCast2D = %MouseRay
+@onready var game_node = get_node("/root/Game")
 
 var mouse_target : Node
 
@@ -11,15 +12,11 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	mouse_target = mouse_ray.get_collider()
-	if mouse_target != null:
-		var target_string = str(mouse_target)
-		text = target_string
-		var trim_length = target_string.find(":")
-		#print("Trim length: ", trimlength)
-		var target_trim = text.erase(trim_length, 99)
-		text = target_trim
-	else:
-		text = "Nothing"
+	var mouseloc := str(get_global_mouse_position())
+	set_text("")
+	set_text(game_node._target_trim)
+	newline()
+	append_text(mouseloc)
+	
 	
 	
