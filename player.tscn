@@ -13,6 +13,7 @@ size = Vector2(62, 61)
 [node name="Player" type="CharacterBody2D" unique_id=782183958 groups=["interactables"]]
 y_sort_enabled = true
 motion_mode = 1
+wall_min_slide_angle = 0.017453292
 script = ExtResource("1_onrkg")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=184701139]

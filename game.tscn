@@ -82,11 +82,12 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="MouseTargetLabel" type="RichTextLabel" parent="ScreenControl" unique_id=437841940]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.015104166
 anchor_top = 0.0712963
 anchor_right = 0.23697917
-anchor_bottom = 0.13796297
+anchor_bottom = 0.73055553
 size_flags_horizontal = 4
 text = "[Mouse location]"
 script = ExtResource("15_7sc4i")

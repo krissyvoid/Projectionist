@@ -53,7 +53,7 @@ debug_color = Color(0.9490196, 0.19215687, 0.56078434, 0)
 
 [node name="Player" parent="." unique_id=782183958 instance=ExtResource("2_fj7yv")]
 unique_name_in_owner = true
-position = Vector2(881, 717)
+position = Vector2(665.3153, 703.3889)
 scale = Vector2(4, 4)
 
 [node name="FOREGROUNDMUG" type="Sprite2D" parent="." unique_id=1999255585]
@@ -74,7 +74,7 @@ unique_name_in_owner = true
 position = Vector2(623, 399)
 
 [node name="TrashCan" parent="." unique_id=891730761 instance=ExtResource("7_pkg7o")]
-position = Vector2(1426, 448)
+position = Vector2(1448.99, 429.84998)
 
 [connection signal="mouse_entered" from="." to="Player" method="_on_world_mouse_entered"]
 [connection signal="mouse_exited" from="." to="Player" method="_on_world_mouse_exited"]

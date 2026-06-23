@@ -28,11 +28,15 @@ func _physics_process(delta: float) -> void:
 	if mousemove and game.active_verb < 2:
 		var direction := global_position.direction_to(go_to_pos)
 		var distance := global_position.distance_to(go_to_pos)
-		var speed : float = MAX_SPEED if distance > 32 else MAX_SPEED * distance / 20
+		var speed : float = MAX_SPEED if distance > 32 else MAX_SPEED * (distance / 60)
 		var desired_velocity := direction * speed
-	
-		velocity = velocity.move_toward(desired_velocity, ACCELERATION * delta)
-		move_and_slide()
+		
+		if distance > 8.0:
+			velocity = velocity.move_toward(desired_velocity, ACCELERATION * delta)
+			move_and_slide()
+		else:
+			go_to_pos = self.global_position
+		
 		
 	else:
 		var direction := Vector2(0,0)
@@ -44,10 +48,14 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 	
 	# Ensure the player is facing the correct way for their movement
-	if velocity.x > 0.0:
+	var distance2 := global_position.direction_to(go_to_pos)
+	if velocity.x > 0.0 and distance2.x < 8:
 		$Sprite2D.flip_h = false
-	if velocity.x < 0.0:
+	elif velocity.x < 0.0 and distance2.x < 8:
 		$Sprite2D.flip_h = true
+	else:
+		pass
+		
 
 func _on_world_mouse_entered() -> void:
 	mouseinworld = true
