@@ -94,7 +94,6 @@ script = ExtResource("15_7sc4i")
 metadata/_edit_use_anchors_ = true
 
 [node name="ActiveVerba" type="Label" parent="ScreenControl" unique_id=19015661]
-visible = false
 layout_mode = 0
 offset_left = 900.0
 offset_top = 813.0
@@ -104,7 +103,6 @@ text = "ACTIVE_VERB == "
 horizontal_alignment = 2
 
 [node name="ActiveVerbb" type="Label" parent="ScreenControl" unique_id=1433874907]
-visible = false
 layout_mode = 0
 offset_left = 1036.0
 offset_top = 813.0
@@ -163,7 +161,6 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 
 [node name="INVTEST" type="VBoxContainer" parent="ScreenControl/TrayBoxC-MID/HBoxContainer" unique_id=775334541]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 16
 

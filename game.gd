@@ -2,7 +2,8 @@ extends Node2D
 
 ## Hello, Github, it's me
 @onready var world: Area2D = %World
-@onready var player = get_node("/root/Game/World/Player")
+@onready var player: CharacterBody2D = get_node("/root/Game/World/Player")
+@onready var player_nav_agent: NavigationAgent2D = get_node("/root/Game/World/Player/PlayerNavAgent")
 
 @onready var inventory_grid = get_node("/root/Game/ScreenControl/TrayBoxC-LEFT/TrayHBoxContainerL/InventoryGrid")
 @onready var inventory_test: RichTextLabel = %InventoryTest
@@ -19,6 +20,10 @@ extends Node2D
 @onready var button_remove_bip_soda: Button = %ButtonRemoveBipSoda
 @onready var button_add_plopcorn: Button = %ButtonAddPlopcorn
 @onready var button_add_bip_soda: Button = %ButtonAddBipSoda
+
+static var popupinstance : Node
+static var popcontent : String
+static var popspawnpos : Vector2
 
 static var active_verb : int = 0
 # 0 = Default, 1 = LOOK AT, 2 = USE, 3 = TAKE, 4 = TALK TO
@@ -129,16 +134,17 @@ static var inventory = ["MugLove"]
 
 var _target_string : String # That node as a string
 var _trim_length : int # The point in that string that begins the UID stuff
-var _target_trim : String # The short, human-readable name of what the mouse is over. Should be the same as in items_list key
-var _examine_target : String # Examine variant of targettrim
+static var _target_trim : String # The short, human-readable name of what the mouse is over. Should be the same as in items_list key
+static var _take_target : String # Holds onto the _target_trim while waiting to take an item
+static var _examine_target : String # Examine variant of targettrim
 var _interact_timeout : bool = 0 # Is interacting on timeout?
 var _examine_timeout_time : float = 0.5 # How long in seconds before the player can examine a new object
 
 const _border_x : float = 64 # Popup borders on the left and right, px
 const _border_y : float = 64 # Popup borders on the top and bottom, px
-var _popup_time : float = 1.5 # How long a popup stays on screen for
+var _popup_time : float = 2.0 # How long a popup stays on screen for
 var _popup_timeout : bool = 0 # Is the popup command on timeout, to prevent spamming
-var _popup_timeout_length : float = 0.5 # How long in seconds the timeout lasts
+var _popup_timeout_length : float = 1.5 # How long in seconds the timeout lasts
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -180,29 +186,35 @@ func _on_button_talk_toggled(toggled_on: bool) -> void:
 
 
 ## Get a popup with the target's description, if it is a valid target
-func _popup(content):
+func _popup(popcontent, popspawnpos = get_global_mouse_position()):
+	for x in get_children():
+		if x is Label:
+			remove_child(x)
 	_popup_timeout = true
 	get_tree().create_timer(_popup_timeout_length).timeout.connect(func(): _popup_timeout = false)
 	var popup = preload("res://scenes/text_bubble.tscn")
-	var instance = popup.instantiate()
-	instance.text = content
-	add_child(instance)
-	var half_x = instance.size.x/2
-	var half_y = instance.size.y/2
-	instance.global_position = get_global_mouse_position() + Vector2 (-half_x,-92)
+	popupinstance = popup.instantiate()
+	popupinstance.text = popcontent
+	add_child(popupinstance)
+	var half_x = popupinstance.size.x/2
+	var half_y = popupinstance.size.y/2
+	popupinstance.global_position = popspawnpos + Vector2 (-half_x,-92)
 		
 	# Keep popup within screen area
-	if instance.global_position.x < _border_x:
-		instance.global_position.x = _border_x
-	elif instance.global_position.x + instance.size.x > (1920 - _border_x):
-		instance.global_position.x = (1920 - _border_x) - instance.size.x
-	if instance.global_position.y - instance.size.y < _border_y:
-		instance.global_position.y = _border_y/2 + half_y
-	elif instance.global_position.y + half_y > 952.0:
-		instance.global_position.y = (1080 - _border_y) - instance.size.y
+	if popupinstance.global_position.x < _border_x:
+		popupinstance.global_position.x = _border_x
+	elif popupinstance.global_position.x + popupinstance.size.x > (1920 - _border_x):
+		popupinstance.global_position.x = (1920 - _border_x) - popupinstance.size.x
+	if popupinstance.global_position.y - popupinstance.size.y < _border_y:
+		popupinstance.global_position.y = _border_y/2 + half_y
+	elif popupinstance.global_position.y + half_y > 952.0:
+		popupinstance.global_position.y = (1080 - _border_y) - popupinstance.size.y
 	
 	# Wait popuptime seconds then remove the popup
-	get_tree().create_timer(_popup_time).timeout.connect(func (): remove_child(instance))
+	await get_tree().create_timer(_popup_time).timeout
+	remove_child(popupinstance)
+	popcontent = ""
+	popspawnpos = Vector2.ZERO
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -223,6 +235,7 @@ func _process(_delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	# LOOK AT
+	# Right Mouse Button examines stuff OR clears the active verb if nothing is under the mouse
 	if event.is_action_pressed("rmb"):
 		# Clears current verb (defaulting to moving and looking)
 		active_verb = 0
@@ -235,13 +248,30 @@ func _input(event: InputEvent) -> void:
 			# Posts an items description if valid
 			_examine_target = _target_trim
 			var desctext : String = items_list[_examine_target]["Description"]
-			_popup(desctext)
+			var popspawnpos = get_global_mouse_position()
+			# If the item being examined is in the world, player moves to it first.
+			# If it's in inventory, examine immediatey.
+			if player.mouseinworld:
+				player.go_to_pos = get_global_mouse_position()
+				await player.playernav_finished
+			_popup(desctext, popspawnpos)
+		elif _target_trim == "Nothing":
+			_take_target = "Nothing"
 	
+	
+	# Left Mouse Button LOOK examines stuff when LOOK is active.
 	if event.is_action_pressed("lmb") and active_verb == 1: 
 		if _target_trim != "Nothing" and !_interact_timeout:
 			_examine_target = _target_trim
 			var desctext : String = items_list[_examine_target]["Description"]
-			_popup(desctext)
+			var popspawnpos = get_global_mouse_position()
+			# If the item being examined is in the world, player moves to it first.
+			# If it's in inventory, examine immediatey.
+			if player.mouseinworld:
+				player.go_to_pos = get_global_mouse_position()
+				await player.playernav_finished
+			_popup(desctext, popspawnpos)
+
 	
 	
 	# USE
@@ -250,39 +280,52 @@ func _input(event: InputEvent) -> void:
 	
 	# TAKE
 	if player.mouseinworld and event.is_action_pressed("lmb") and active_verb == 3 and !_interact_timeout:
-		if _target_trim == "Nothing":
-			_popup("There's nothing to take.")
+		popspawnpos = get_global_mouse_position()
+		var taken_node = mouse_target
+		player.go_to_pos = get_global_mouse_position()
+		_take_target = _target_trim
+		await player.playernav_finished
+		
+		if _take_target == "Nothing" or "":
+			#_popup("There's nothing to take.", popspawnpos)
+			pass
 		else:
-			var givenitem: String = items_list[_target_trim]["Gives"]
+			var givenitem: String = items_list[_take_target]["Gives"]
 		
 			if inventory.has(givenitem):
 				var enoughtext : String = items_list[givenitem]["Enough Line"]
-				_popup(enoughtext)
+				if _take_target != "":
+					_popup(enoughtext, popspawnpos)
 			
-			elif _target_trim != "Nothing" and items_list[_target_trim]["Take-able"]:
+			elif _take_target != "Nothing" and items_list[_take_target]["Take-able"]:
 				_interact_timeout = true
-				get_tree().create_timer(_examine_timeout_time).timeout.connect(func(): _interact_timeout = false)
+				await get_tree().create_timer(_examine_timeout_time).timeout
+				_interact_timeout = false
 				# Add the item it gives to the inventory, and say the Takeline
-				var getitem = items_list[_target_trim]["Gives"]
-				_inventory_add_item(getitem)
+				if _take_target != "Nothing":
+					var getitem = items_list[_take_target]["Gives"]
+					_inventory_add_item(getitem)
 			
-				print("Taking the ", _target_trim)
-				var taketext : String = items_list[_target_trim]["Take Line"]
-				_popup(taketext)
+					print("Taking the ", _take_target)
+					var taketext : String = items_list[_take_target]["Take Line"]
+					if _take_target != "":
+						_popup(taketext, popspawnpos)
 			
-				items_list[_target_trim]["Quantity"] -= 1
-				if items_list[_target_trim]["Quantity"] == 0:
-					mouse_target.visible = false
+					items_list[_take_target]["Quantity"] -= 1
+					if items_list[_take_target]["Quantity"] == 0:
+						taken_node.visible = false
+						taken_node.set_collision_layer_value(4, false)
 		
 		
-			elif _target_trim != "Nothing" and items_list[_target_trim]["Take-able"] == false:
+			elif _take_target != "Nothing" and items_list[_take_target]["Take-able"] == false:
 				_interact_timeout = true
 				get_tree().create_timer(_examine_timeout_time).timeout.connect(func(): _interact_timeout = false)
 				# Just say the (attempting to) Take Line
-				var taketext : String = items_list[_target_trim]["Take Line"]
-				_popup(taketext)
-			elif _target_trim == "Nothing":
-					pass # Ignore input
+				var taketext : String = items_list[_take_target]["Take Line"]
+				if _take_target != "":
+					_popup(taketext, popspawnpos)
+			elif _take_target == "Nothing":
+				pass # Ignore input
 	
 	# TALK TO
 	if event.is_action_pressed("lmb") and active_verb == 4:
@@ -297,18 +340,22 @@ func _on_button_remove_plopcorn_pressed() -> void:
 		_inventory_remove_item("Plopcorn")
 		items_list["Plopcorn"]["Quantity"] += 1
 		world.plopcorn.visible = true
+		world.plopcorn.set_collision_layer_value(4, true)
 func _on_button_remove_bip_soda_pressed() -> void:
 	if inventory.has("Bip"):
 		_inventory_remove_item("Bip")
 		items_list["Bip"]["Quantity"] += 1
 		world.bip.visible = true
+		world.bip.set_collision_layer_value(4, true)
 func _on_button_add_plopcorn_pressed() -> void:
 	if !(inventory.has("Bip")):
 		_inventory_add_item("Plopcorn")
 		items_list["Plopcorn"]["Quantity"] -= 1
 		world.plopcorn.visible = false
+		world.plopcorn.set_collision_layer_value(4, false)
 func _on_button_add_bip_soda_pressed() -> void:
 	if !(inventory.has("Bip")):
 		_inventory_add_item("Bip")
 		items_list["Bip"]["Quantity"] -= 1
 		world.bip.visible = false
+		world.bip.set_collision_layer_value(4, false)
