@@ -23,6 +23,18 @@ scale = Vector2(0.50322735, 0.5039987)
 texture = ExtResource("1_4flbx")
 offset = Vector2(0, -52)
 
+<<<<<<< Updated upstream
+=======
+[node name="PlayerNavAgent" type="NavigationAgent2D" parent="." unique_id=1229401159]
+unique_name_in_owner = true
+path_desired_distance = 64.0
+target_desired_distance = 64.0
+path_max_distance = 512.0
+simplify_path = true
+debug_use_custom = true
+debug_path_custom_color = Color(0.99694544, 6.2329323e-06, 1.540184e-06, 1)
+
+>>>>>>> Stashed changes
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1530241355]
 position = Vector2(-2.13162e-14, -0.9999995)
 rotation = 1.5707964
