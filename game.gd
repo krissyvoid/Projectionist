@@ -280,7 +280,7 @@ func _input(event: InputEvent) -> void:
 	
 	# TAKE
 	if player.mouseinworld and event.is_action_pressed("lmb") and active_verb == 3 and !_interact_timeout:
-		var popspawnpos = get_global_mouse_position()
+		popspawnpos = get_global_mouse_position()
 		var taken_node = mouse_target
 		player.go_to_pos = get_global_mouse_position()
 		_take_target = _target_trim
