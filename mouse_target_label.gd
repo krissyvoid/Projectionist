@@ -3,6 +3,7 @@ extends RichTextLabel
 @onready var mouse_ray: RayCast2D = %MouseRay
 @onready var game_node = get_node("/root/Game")
 @onready var player = get_node("/root/Game/World/Player")
+@onready var player_nav_agent: NavigationAgent2D = %PlayerNavAgent
 
 var mouse_target : Node
 
@@ -18,10 +19,13 @@ func _process(_delta: float) -> void:
 
 # Updates the text box every second
 func update():
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(1/60).timeout
 	var mouseloc := str(get_global_mouse_position())
 	set_text("")
 	set_text(game_node._target_trim)
+	newline()
+	append_text("Take Target: ")
+	append_text(str(game_node._take_target))
 	newline()
 	append_text(mouseloc)
 	newline()
@@ -31,4 +35,7 @@ func update():
 	append_text("Player real velocity: ")
 	var truevelocity = player.get_real_velocity()
 	append_text(str(truevelocity))
+	newline()
+	append_text("Mouse in World: ")
+	append_text(str(player.mouseinworld))
 	update()

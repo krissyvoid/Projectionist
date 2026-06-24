@@ -8,6 +8,15 @@
 [ext_resource type="Texture2D" uid="uid://b1x7h2yjb6vn7" path="res://images/items/mugheart.png" id="6_dwbse"]
 [ext_resource type="PackedScene" uid="uid://b1jsq1ag7vb36" path="res://scenes/world_items/TrashCan.tscn" id="7_pkg7o"]
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_pkg7o"]
+vertices = PackedVector2Array(1784.1719, 751.7344, 1847.8125, 784.03125, 1644.5625, 784.0469, 1683.0859, 685.96094, 127.86719, 784.15625, 112.19531, 768.9219, 194.03906, 727.5, 290.33594, 784.1406, 277.90625, 685.0547, 486.14844, 784.125, 335.60938, 656.1953, 399.8828, 624.0547, 491.89063, 624.0547, 655.4375, 784.1172, 588.60156, 624.0625, 690.8281, 622.66406, 796.2344, 784.1094, 783.9922, 624.0625, 816.15625, 664.0625, 903.1875, 784.10156, 914.9844, 664.0625, 993.625, 784.09375, 1000.0703, 664.0625, 1117.4063, 784.08594, 1596.1953, 629.46875, 1493.5938, 784.0547, 1580.1328, 636.5781, 1542.2109, 647.89844, 1506.1328, 644.47656, 1358.9453, 784.0625, 1484.2734, 631.0469, 1360.1797, 608.2422, 1257.2656, 608.21094, 1236.7813, 784.0703, 1140.375, 608.1719, 1032.1406, 608.1406)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(3, 0, 2), PackedInt32Array(4, 5, 6), PackedInt32Array(7, 4, 6), PackedInt32Array(7, 6, 8), PackedInt32Array(9, 7, 8), PackedInt32Array(9, 8, 10), PackedInt32Array(9, 10, 11), PackedInt32Array(9, 11, 12), PackedInt32Array(13, 9, 12), PackedInt32Array(13, 12, 14), PackedInt32Array(13, 14, 15), PackedInt32Array(16, 13, 15), PackedInt32Array(16, 15, 17), PackedInt32Array(16, 17, 18), PackedInt32Array(19, 16, 18), PackedInt32Array(19, 18, 20), PackedInt32Array(21, 19, 20), PackedInt32Array(21, 20, 22), PackedInt32Array(23, 21, 22), PackedInt32Array(24, 3, 2), PackedInt32Array(24, 2, 25), PackedInt32Array(26, 24, 25), PackedInt32Array(27, 26, 25), PackedInt32Array(28, 27, 25), PackedInt32Array(28, 25, 29), PackedInt32Array(30, 28, 29), PackedInt32Array(31, 30, 29), PackedInt32Array(32, 31, 29), PackedInt32Array(32, 29, 33), PackedInt32Array(34, 32, 33), PackedInt32Array(34, 33, 23), PackedInt32Array(34, 23, 22), PackedInt32Array(35, 34, 22)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(399.88196, 624.05316, 491.88892, 624.05615, 588.59863, 624.0592, 690.8304, 622.6621, 783.9959, 624.0654, 816.157, 664.0641, 914.98315, 664.06415, 1000.06964, 664.0641, 1032.1442, 608.13684, 1140.3783, 608.17224, 1257.2682, 608.21045, 1360.1831, 608.24414, 1484.2766, 631.0457, 1506.133, 644.4756, 1542.2095, 647.8989, 1580.1292, 636.5757, 1596.1924, 629.4657, 1683.0853, 685.9613, 1784.1699, 751.73346, 1847.8163, 784.02966, 1644.5657, 784.04443, 1493.5911, 784.0554, 1358.9421, 784.06525, 1236.7781, 784.07416, 1117.4033, 784.0829, 993.6256, 784.09186, 903.18604, 784.09845, 796.235, 784.1062, 655.43787, 784.11646, 486.14655, 784.1288, 290.33652, 784.14307, 127.86764, 784.1549, 112.19835, 768.9209, 194.03671, 727.50085, 277.90866, 685.0515, 335.60974, 656.19543)])
+sample_partition_type = 1
+parsed_collision_mask = 1
+border_size = 1.0
+agent_radius = 0.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fj7yv"]
 size = Vector2(472, 200)
 
@@ -23,6 +32,9 @@ script = ExtResource("1_tlwt5")
 texture = ExtResource("1_f3sb7")
 centered = false
 
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=260494750]
+navigation_polygon = SubResource("NavigationPolygon_pkg7o")
+
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1944922519]
 unique_name_in_owner = true
 rotation = -3.1415925
@@ -35,7 +47,7 @@ polygon = PackedVector2Array(8.8496065, -4.533512, -8.390446, 4.0865173, -13.316
 
 [node name="floor_coll2" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=1565548070]
 scale = Vector2(0.99999994, 0.99999994)
-polygon = PackedVector2Array(-60.340195, -48.02586, -62.80306, -51.104443, -76.96173, -51.102592, -79.42451, -46.792732, -112.67608, -46.794422, -115.754654, -51.104435, -117.60181, -51.104435, -123.14325, -48.64157, -124.370186, -48.639824, -119.44461, -45.561348, -77.57743, -45.561348, -77.57743, -46.792732, -75.73035, -49.871204, -63.41647, -50.486897, -59.722305, -45.561348, -27.090536, -45.561356, -25.243454, -47.408436, -30.785814, -48.02586)
+polygon = PackedVector2Array(-60.340195, -48.02586, -62.80306, -51.104443, -76.96173, -51.102592, -79.42451, -46.792732, -104.64791, -46.77048, -114.17648, -48.522564, -115.90013, -49.591984, -118.64288, -49.84361, -121.56173, -48.98807, -122.81987, -48.43449, -124.370186, -48.639824, -119.44461, -45.561348, -77.57743, -45.561348, -77.57743, -46.792732, -75.73035, -49.871204, -63.41647, -50.486897, -59.722305, -45.561348, -27.090536, -45.561356, -25.243454, -47.408436, -30.785814, -48.02586)
 
 [node name="floor_coll3" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=49200324]
 scale = Vector2(0.99999994, 0.99999994)
@@ -46,14 +58,14 @@ polygon = PackedVector2Array(-123.13877, -48.639816, -124.37016, -48.639816, -13
 
 [node name="World_Coll" type="CollisionShape2D" parent="." unique_id=18163166]
 unique_name_in_owner = true
-position = Vector2(944, 400)
+position = Vector2(946.1256, 381.68713)
 scale = Vector2(4, 4)
 shape = SubResource("RectangleShape2D_fj7yv")
 debug_color = Color(0.9490196, 0.19215687, 0.56078434, 0)
 
 [node name="Player" parent="." unique_id=782183958 instance=ExtResource("2_fj7yv")]
 unique_name_in_owner = true
-position = Vector2(665.3153, 703.3889)
+position = Vector2(676.60474, 710.5731)
 scale = Vector2(4, 4)
 
 [node name="FOREGROUNDMUG" type="Sprite2D" parent="." unique_id=1999255585]
